@@ -1,0 +1,374 @@
+/* =========================
+   GENERAL
+   ========================= */
+
+.layout-container {
+    min-height: 100vh;
+}
+
+
+/* =========================
+   EXPANDED SIDEBAR
+   ========================= */
+
+.sidebar-expanded {
+    width: 310px;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: #212529;
+    color: white;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    transition: width 0.3s ease;
+}
+
+
+/* =========================
+   COLLAPSED SIDEBAR
+   ========================= */
+
+.sidebar-collapsed {
+    width: 80px;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: #212529;
+    color: white;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    transition: width 0.3s ease;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 45px;
+}
+
+
+/* Brand */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    width: 45px;
+    height: 40px;
+
+    background-color: white;
+    color: #212529;
+
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+.brand-text {
+    font-size: 26px;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   TOGGLE BUTTON
+   ========================= */
+
+.toggle-btn {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+}
+
+.toggle-btn:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+.toggle-btn i {
+    font-size: 24px;
+}
+
+
+/* =========================
+   HR
+   ========================= */
+
+.sidebar-expanded hr,
+.sidebar-collapsed hr {
+    border-color: #6c757d;
+
+    margin: 15px 0;
+}
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 13px 18px;
+
+    border-radius: 7px;
+
+    font-size: 18px;
+
+    white-space: nowrap;
+
+    transition: background-color 0.2s;
+}
+
+.nav-item i {
+    width: 22px;
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+}
+
+.nav-item:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+.nav-item.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+
+/* =========================
+   COLLAPSED NAVIGATION
+   ========================= */
+
+.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+}
+
+.sidebar-collapsed .brand {
+    display: none;
+}
+
+.sidebar-collapsed .nav-item {
+    justify-content: center;
+
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar-collapsed .nav-item span {
+    display: none;
+}
+
+.sidebar-collapsed .nav-item i {
+    font-size: 22px;
+}
+
+
+/* =========================
+   USER
+   ========================= */
+
+.user-section {
+    margin-top: auto;
+
+    border-top: 1px solid #6c757d;
+
+    padding-top: 20px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background-color: #495057;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.user-avatar i {
+    font-size: 20px;
+}
+
+.username {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.dropdown-icon {
+    font-size: 10px;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+   ========================= */
+
+.logout-btn {
+    width: 100%;
+
+    margin-top: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    color: white;
+    background-color: transparent;
+
+    border: 1px solid #6c757d;
+
+    border-radius: 6px;
+
+    padding: 9px 15px;
+
+    font-size: 16px;
+
+    transition: all 0.2s ease;
+}
+
+.logout-btn i {
+    font-size: 18px;
+}
+
+.logout-btn:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+
+/* =========================
+   COLLAPSED USER
+   ========================= */
+
+.sidebar-collapsed .user {
+    justify-content: center;
+}
+
+.sidebar-collapsed .username,
+.sidebar-collapsed .dropdown-icon {
+    display: none;
+}
+
+
+/* Collapsed logout button */
+
+.sidebar-collapsed .logout-btn {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    border: none;
+}
+
+.sidebar-collapsed .logout-text {
+    display: none;
+}
+
+.sidebar-collapsed .logout-btn i {
+    font-size: 20px;
+}
+
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.content-expanded {
+    margin-left: 310px;
+
+    min-height: 100vh;
+
+    padding: 20px;
+
+    transition: margin-left 0.3s ease;
+}
+
+.content-collapsed {
+    margin-left: 80px;
+
+    min-height: 100vh;
+
+    padding: 20px;
+
+    transition: margin-left 0.3s ease;
+}

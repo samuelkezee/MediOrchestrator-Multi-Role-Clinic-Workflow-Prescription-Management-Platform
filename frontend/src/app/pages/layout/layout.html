@@ -1,0 +1,114 @@
+<div class="layout-container">
+
+    <!-- Sidebar -->
+    <aside [ngClass]="isSidebarExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'">
+
+        <!-- Header -->
+        <div class="sidebar-header">
+
+            <div class="brand">
+                <div class="brand-icon">
+                    B
+                </div>
+
+                <span class="brand-text">
+                    Sidebar
+                </span>
+            </div>
+
+            <!-- Toggle button -->
+            <button
+                type="button"
+                class="btn toggle-btn"
+                (click)="togglesidebar()">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+        </div>
+
+        <hr>
+
+
+        <!-- Navigation -->
+        <nav class="sidebar-menu">
+
+            <a href="#" class="nav-item active">
+                <i class="bi bi-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="bi bi-calendar-check"></i>
+                <span>Appointments</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="bi bi-person-badge"></i>
+                <span>Doctors</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="bi bi-people"></i>
+                <span>Patients</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="bi bi-file-medical"></i>
+                <span>Prescriptions</span>
+            </a>
+
+        </nav>
+
+
+        <!-- User -->
+        <div class="user-section">
+
+            <!-- User information -->
+            <div class="user">
+
+                <div class="user-avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
+                <span class="username">{{loggedUserData.fullName}}
+                </span>
+                <span class="role">{{loggedUserData.role}}
+                </span>
+
+                <i class="bi bi-caret-down-fill dropdown-icon"></i>
+
+            </div>
+
+
+            <!-- Logout button -->
+            <button
+                type="button"
+                class="btn logout-btn"
+                (click)="onLogoff()">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                <span class="logout-text" >
+                    Logout
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Content -->
+    <div [ngClass]="isSidebarExpanded ? 'content-expanded' : 'content-collapsed'">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

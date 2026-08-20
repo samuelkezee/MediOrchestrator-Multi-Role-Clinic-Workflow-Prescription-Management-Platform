@@ -1,0 +1,258 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- ================= USER TABLE ================= -->
+        <div [ngClass]="isFormOpen ? 'col-8' : 'col-12'">
+
+            <div class="card shadow-sm">
+
+                <!-- Table Header -->
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+                        User Management
+                    </h5>
+
+                    <button type="button" class="btn btn-primary" (click)="toggleFormVisibility()">
+                        <i class="bi bi-plus-lg"></i>
+                        Add User
+                    </button>
+
+                </div>
+
+
+                <!-- Table -->
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Mobile No</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            @for (item of userList(); track $index) {
+
+                            <tr>
+
+                                <td>
+                                    {{ $index + 1 }}
+                                </td>
+
+                                <td>
+                                    {{ item.fullName }}
+                                </td>
+
+                                <td>
+                                    {{ item.email }}
+                                </td>
+
+                                <td>
+                                    {{ item.mobileNo }}
+                                </td>
+
+                                <td>
+                                    {{ item.roleName }}
+                                </td>
+
+                                <td>
+                                    {{ item.isActive ? 'Active' : 'Inactive' }}
+                                </td>
+
+                                <td>
+
+                                    <button type="button" class="btn btn-primary btn-sm me-2"
+                                        (click)="toggleFormVisibility()">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= USER FORM ================= -->
+
+        @if (isFormOpen) {
+
+        <div class="col-4">
+
+            <div class="card shadow-sm">
+
+                <!-- Form Header -->
+                <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+                        Add User
+                    </h5>
+
+                    <button type="button" class="btn btn-sm btn-light" (click)="toggleFormVisibility()">
+                        <i class="bi bi-x-lg"></i>
+                        Close
+                    </button>
+
+                </div>
+
+
+                <!-- Form Body -->
+                <div class="card-body">
+
+                    <form [formGroup]="userForm" (ngSubmit)="onSave()">
+
+                        <div class="row">
+
+                            <!-- Full Name -->
+                            <div class="col-8 mb-3">
+
+                                <label for="fullName" class="form-label">
+                                    Full Name
+                                </label>
+
+                                <input type="text" class="form-control" id="fullName" formControlName="fullName"
+                                    placeholder="Enter full name">
+
+                            </div>
+
+
+                            <!-- Role -->
+                            <div class="col-4 mb-3">
+
+                                <label for="roleName" class="form-label">
+                                    Role
+                                </label>
+
+                                <select class="form-select" id="roleName" formControlName="roleName">
+                                    <option value="" disabled>
+                                        Select
+                                    </option>
+
+                                    <option value="Admin">
+                                        Admin
+                                    </option>
+
+                                    <option value="Doctor">
+                                        Doctor
+                                    </option>
+
+                                    <option value="Staff">
+                                        Staff
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Email -->
+                            <div class="col-8 mb-3">
+
+                                <label for="email" class="form-label">
+                                    Email
+                                </label>
+
+                                <input type="email" class="form-control" id="email" formControlName="email"
+                                    placeholder="Enter email">
+
+                            </div>
+
+
+                            <!-- Mobile -->
+                            <div class="col-4 mb-3">
+
+                                <label for="mobileNo" class="form-label">
+                                    Mobile No
+                                </label>
+
+                                <input type="text" class="form-control" id="mobileNo" formControlName="mobileNo"
+                                    placeholder="Mobile">
+
+                            </div>
+
+
+                            <!-- Password -->
+                            <div class="col-8 mb-3">
+
+                                <label for="password" class="form-label">
+                                    Password
+                                </label>
+
+                                <input type="password" class="form-control" id="password" formControlName="password"
+                                    placeholder="Enter password">
+
+                            </div>
+
+
+                            <!-- Active -->
+                            <div class="col-4 mb-3">
+
+                                <label class="form-label d-block">
+                                    Status
+                                </label>
+
+                                <div class="form-check form-switch mt-2">
+
+                                    <input class="form-check-input" type="checkbox" id="isActive"
+                                        formControlName="isActive">
+
+                                    <label class="form-check-label" for="isActive">
+                                        Active
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Buttons -->
+                            <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+
+                                <button type="button" class="btn btn-secondary" (click)="onReset()">
+                                    Reset
+                                </button>
+
+                                <button type="submit" class="btn btn-primary">
+                                    Save User
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+</div>

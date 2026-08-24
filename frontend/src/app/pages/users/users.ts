@@ -1,10 +1,12 @@
-import { Component, Inject, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, ElementRef, Inject, inject, OnInit, signal, viewChild, WritableSignal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ɵInternalFormsSharedModule } from '@angular/forms';
 import { Userservices } from '../../core/services/userservices';
 import { isActive } from '@angular/router';
 import { LoginModel } from '../../core/models/class/User.Model';
 import { LoginAPIResponseModel } from '../../core/models/interfaces/User.Model';
 import { NgClass } from '@angular/common';
+import { ViewChild } from '@angular/core';
+import { Login } from '../login/login';
 
 @Component({
   selector: 'app-users',
@@ -15,13 +17,15 @@ import { NgClass } from '@angular/common';
 export class Users implements OnInit {
   isFormOpen: boolean = false;
   userForm!: FormGroup;
-  userList: WritableSignal<LoginAPIResponseModel[]> = signal<LoginAPIResponseModel[]>([])
+  userList: WritableSignal<LoginAPIResponseModel[]> = signal<LoginAPIResponseModel[]>([]);
 
-
+  @ViewChild('searchTemp') searchdropDown!:ElementRef;
+  loggedUser!:LoginModel;
 
 
   constructor(private fb: FormBuilder,
     private usrServ: Userservices) {
+      this.loggedUser=this.usrServ.loggedUserData;  
 
   }
 
@@ -58,13 +62,40 @@ export class Users implements OnInit {
 
   getAllUsers(): void {
     this.usrServ.getAllUsers().subscribe({
-      next: (res: LoginAPIResponseModel[]) => {
-        console.log(res)
+      next: (res: any) => {
+        console.log('[getAllUsers] Raw API Response:', res);
+        // Handle both direct array and wrapped responses (res.data or res)
+        const list = Array.isArray(res) ? res : (res?.data || []);
+        console.log('[getAllUsers] Parsed user list length:', list.length, list);
+        this.userList.set(list);
       },
       error: (error: any) => {
-        console.log(error)
+        console.error('[getAllUsers] API Error:', error);
       }
-    })
+    });
+  }
+
+  onResetfilter(){
+    this.searchdropDown.nativeElement='';
+    this.getAllUsers();
+  }
+
+
+
+  onSearch(){
+    const selectedRole=this.searchdropDown.nativeElement.value;
+     this.usrServ.filterUsers(selectedRole).subscribe({
+      next: (res: any) => {
+        console.log('[filterUsers] Raw API Response:', res);
+        // Handle both direct array and wrapped responses (res.data or res)
+        const list = Array.isArray(res) ? res : (res?.data || []);
+        console.log('[filterUsers] Parsed user list length:', list.length, list);
+        this.userList.set(list);
+      },
+      error: (error: any) => {
+        console.error('[filterUsers] API Error:', error);
+      }
+    });
   }
 
   onSave(): void {

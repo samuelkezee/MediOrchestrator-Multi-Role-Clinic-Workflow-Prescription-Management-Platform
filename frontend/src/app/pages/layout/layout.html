@@ -34,19 +34,19 @@
         <!-- Navigation -->
         <nav class="sidebar-menu">
 
-            <a href="#" class="nav-item active">
+            <a routerLink="/users" routerLinkActive="active" class="nav-item">
                 <i class="bi bi-house"></i>
-                <span>Home</span>
+                <span>users</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a routerLink="/medicine-master" routerLinkActive="active" class="nav-item">
                 <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
+                <span>Medicine</span>
             </a>
 
-            <a href="#" class="nav-item">
-                <i class="bi bi-calendar-check"></i>
-                <span>Appointments</span>
+            <a routerLink="/patient-list" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-file-medical"></i>
+                <span>Patient</span>
             </a>
 
             <a href="#" class="nav-item">
@@ -77,9 +77,9 @@
                     <i class="bi bi-person-fill"></i>
                 </div>
 
-                <span class="username">{{loggedUserData.fullName}}
+                <span class="username">{{loggedUserData?.fullName}}
                 </span>
-                <span class="role">{{loggedUserData.role}}
+                <span class="role">{{loggedUserData?.roleName || loggedUserData?.role}}
                 </span>
 
                 <i class="bi bi-caret-down-fill dropdown-icon"></i>

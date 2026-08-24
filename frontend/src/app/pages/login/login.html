@@ -1,40 +1,77 @@
 <div class="container-fluid min-vh-100">
     <div class="row min-vh-100">
 
-        <!-- Left Side -->
-        <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-primary text-white">
-            <div class="text-center px-5">
-                <h1 class="fw-bold mb-3">Hospital Prescription System</h1>
-                <p class="lead">Manage patients, doctors, appointments and prescriptions securely from one place.</p>
+        <!-- ================= LEFT BANNER ================= -->
+        <div class="col-lg-6 d-none d-lg-flex cm-auth-banner">
+
+            <div class="cm-auth-banner-content text-center">
+
+                <!-- Hospital logo -->
+                <div class="cm-auth-logo mx-auto mb-4">
+                    🏥
+                </div>
+
+                <h1>Hospital Prescription System</h1>
+
+                <p class="cm-auth-banner-desc mt-3">
+                    Manage patients, doctors, appointments and prescriptions
+                    securely from one place.
+                </p>
+
+                <div class="cm-auth-features mt-4">
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Secure Role-Based Access
+                    </div>
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Patient & Doctor Management
+                    </div>
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Digital Prescription Records
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
 
-        <!-- Right Side -->
-        <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light">
 
-            <div class="card shadow border-0 rounded-4 p-4 p-md-5" style="max-width: 450px; width: 100%;">
+        <!-- ================= RIGHT FORM ================= -->
+        <div class="col-lg-6 cm-auth-form-section">
+
+            <div class="cm-auth-card cm-auth-card--narrow">
 
                 <div class="text-center mb-4">
-                    <div class="mb-3"><span class="fs-1">🏥</span></div>
-                    <h2 class="fw-bold text-dark">Welcome Back</h2>
-                    <p class="text-muted mb-0">Sign in to your hospital account</p>
+                    <div class="cm-auth-logo mx-auto mb-3">🏥</div>
+                    <h2 class="cm-auth-card-title">Welcome Back</h2>
+                    <p class="cm-auth-card-subtitle mb-0">Sign in to your hospital account</p>
                 </div>
+
 
                 <!-- Login Form -->
                 <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && Login()">
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold">
+                        <label for="email" class="form-label cm-form-label fw-semibold">
                             Email Address
                         </label>
-
-                        <input type="email" class="form-control form-control-lg" name="email" id="email" [(ngModel)]="loginObj.email"
-                            #emailModel="ngModel"
-                            placeholder="Enter your email"
-                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                            required
-                            [class.is-invalid]="emailModel.invalid && (emailModel.touched || emailModel.dirty || loginForm.submitted)">
+                        <input type="email"
+                               class="form-control cm-form-control"
+                               name="email"
+                               id="email"
+                               [(ngModel)]="loginObj.email"
+                               #emailModel="ngModel"
+                               placeholder="Enter your email"
+                               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                               required
+                               [class.is-invalid]="emailModel.invalid && (emailModel.touched || emailModel.dirty || loginForm.submitted)">
 
                         @if (emailModel.invalid && (emailModel.touched || emailModel.dirty || loginForm.submitted)) {
                             <div class="text-danger small mt-1">
@@ -48,17 +85,21 @@
                         }
                     </div>
 
+
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">
+                        <label for="password" class="form-label cm-form-label fw-semibold">
                             Password
                         </label>
-
-                        <input type="password" class="form-control form-control-lg" id="password" name="password" [(ngModel)]="loginObj.password"
-                            #passwordModel="ngModel"
-                            placeholder="Enter your password"
-                            required
-                            [class.is-invalid]="passwordModel.invalid && (passwordModel.touched || passwordModel.dirty || loginForm.submitted)">
+                        <input type="password"
+                               class="form-control cm-form-control"
+                               id="password"
+                               name="password"
+                               [(ngModel)]="loginObj.password"
+                               #passwordModel="ngModel"
+                               placeholder="Enter your password"
+                               required
+                               [class.is-invalid]="passwordModel.invalid && (passwordModel.touched || passwordModel.dirty || loginForm.submitted)">
 
                         @if (passwordModel.invalid && (passwordModel.touched || passwordModel.dirty || loginForm.submitted)) {
                             <div class="text-danger small mt-1">
@@ -69,6 +110,7 @@
                         }
                     </div>
 
+
                     <!-- Remember + Forgot -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="form-check">
@@ -78,22 +120,24 @@
                         <a href="#" class="text-decoration-none">Forgot Password?</a>
                     </div>
 
-                    <!-- <div class="alert alert-danger py-2">
-                        Invalid Credentials
-                    </div> -->
 
                     <!-- Login Button -->
-                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-semibold" [disabled]="loginForm.invalid">
+                    <button type="submit"
+                            class="btn cm-btn cm-btn-primary cm-btn-block fw-semibold"
+                            [disabled]="loginForm.invalid">
                         Login
                     </button>
 
                 </form>
 
-                <div class="text-center mt-4">
+
+                <div class="cm-auth-link-section mt-4">
                     <small class="text-muted">© 2026 Hospital Prescription System</small>
                 </div>
 
             </div>
+
         </div>
+
     </div>
 </div>

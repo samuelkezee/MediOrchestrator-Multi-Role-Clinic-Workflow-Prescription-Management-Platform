@@ -1,1 +1,242 @@
-<p>medicines-master works!</p>
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- ================= MEDICINE TABLE ================= -->
+        <div [ngClass]="isFormOpen() ? 'col-8' : 'col-12'">
+
+            <div class="card cm-page-card">
+
+                <!-- Table Header -->
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+                        Medicine Management
+                    </h5>
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <!-- Search -->
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Search medicine..."
+                               style="width: 180px;"
+                               [ngModel]="searchMedicine()"
+                               (ngModelChange)="searchMedicine.set($event)">
+
+                        <!-- Form Filter -->
+                        <select [ngModel]="selectedMedicine()" (ngModelChange)="selectedMedicine.set($event)" class="form-select" style="width: 150px;">
+                            <option value="">All Forms</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="Cream">Cream</option>
+                        </select>
+
+                        <!-- Reset -->
+                        <button type="button" class="btn btn-secondary" (click)="onResetFilter()">    
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+                            Reset
+                        </button>
+
+                        <!-- Add Medicine -->
+                        <button type="button" class="btn btn-success" (click)="toggleFormVisibility()" >
+                            <i class="bi bi-plus-lg me-1"></i>
+                            Add Medicine
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Table Body -->
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>S.No</th>
+                                <th style="width: 120px;">Medicine Id</th>
+                                <th>Medicine Name</th>
+                                <th>Form</th>
+                                <th>Strength</th>
+                                <th style="width: 120px;" class="text-center">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for(item of filteredMedicineList(); track item.medicineId || $index){
+                                <tr>
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{item.medicineId}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.form}}</td>
+                                    <td>{{item.strength}}</td>
+
+                                    <!-- Action Buttons -->
+                                    <td class="d-flex gap-2 justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-primary" (click)="onEdit(item)">
+                                            <i class="bi bi-pencil"></i>
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(item.medicineId)">
+                                            <i class="bi bi-trash"></i>
+                                            Delete
+                                        </button>
+                                    </td>
+                                    
+                                </tr>
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ADD / EDIT MEDICINE FORM ================= -->
+         @if(isFormOpen()){
+            <div class="col-4">
+
+            <div class="card cm-form-panel">
+
+                <!-- Form Header -->
+                <div class="cm-form-panel-header">
+
+                    <h5>
+                        {{ newMedicine().medicineId ? 'Update Medicine' : 'Add Medicine' }}
+                    </h5>
+
+                    <button type="button"
+                            class="cm-form-panel-close" (click)="toggleFormVisibility()">
+                        <i class="bi bi-x-lg"></i>
+                        Close
+                    </button>
+
+                </div>
+
+
+                <!-- Form Body -->
+                <div class="card-body">
+
+                    <form (ngSubmit)="onsave()" (ngReset)="onReset()">
+
+                        <div class="row">
+
+                            <!-- Medicine Name -->
+                            <div class="col-12 mb-3">
+
+                                <label for="medicineName" class="form-label">
+                                    Medicine Name
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" 
+                                       class="form-control"
+                                       id="medicineName"
+                                       [formField]="medicineForm.name"
+                                       placeholder="e.g. Paracetamol">
+
+                            </div>
+
+
+                            <!-- Form Type -->
+                            <div class="col-12 mb-3">
+
+                                <label for="medicineFormType" class="form-label">
+                                    Form Type
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <select [formField]="medicineForm.form" class="form-select" id="medicineFormType">
+
+                                    <option value="" selected disabled>
+                                        Select Form
+                                    </option>
+
+                                    <option value="Tablet">
+                                        Tablet
+                                    </option>
+
+                                    <option value="Capsule">
+                                        Capsule
+                                    </option>
+
+                                    <option value="Syrup">
+                                        Syrup
+                                    </option>
+
+                                    <option value="Injection">
+                                        Injection
+                                    </option>
+
+                                    <option value="Cream">
+                                        Cream
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Strength -->
+                            <div class="col-12 mb-3">
+
+                                <label for="medicineStrength" class="form-label">
+                                    Strength
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="medicineStrength"
+                                       [formField]="medicineForm.strength"
+                                       placeholder="e.g. 500mg, 10ml, 5%">
+
+                            </div>
+
+
+                            <!-- Buttons -->
+                            <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+
+                                <button type="button"
+                                        class="btn btn-secondary"
+                                        (click)="onReset()">
+                                    Reset
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-primary">
+                                    {{ newMedicine().medicineId ? 'Update Medicine' : 'Save Medicine' }}
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+         }
+
+        
+    
+
+    </div>
+
+</div>

@@ -1,0 +1,128 @@
+<div class="container-fluid">
+    <div class="row" >
+
+        <!-- ================= PATIENT TABLE ================= -->
+        <div class="col-8">
+
+            <div class="card cm-page-card">
+
+                <!-- Table Header -->
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+                        Patient Management
+                    </h5>
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <!-- Search -->
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Search patient..."
+                               style="width: 180px;">
+                               <!-- [ngModel]="searchPatient()"  -->
+                               <!-- (ngModelChange)="searchPatient.set($event)"  -->
+
+                        <!-- Form Filter -->
+                        <select  class="form-select" style="width: 150px;">
+                            <option value="">All Forms</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="Cream">Cream</option>
+                        </select>
+
+                        <!-- Reset -->
+                        <button type="button" class="btn btn-secondary" >
+                        <!-- (click)="onResetFilter()" -->
+                         
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+                            Reset
+                        </button>
+
+                        <!-- Add Medicine -->
+                        <button type="button" class="btn btn-success">
+                        <!--  (click)="toggleFormVisibility()"  -->
+                            <i class="bi bi-plus-lg me-1"></i>
+                            Add Medicine
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Table Body -->
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 120px;">Patient Id</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Gender</th>
+                                <th>DOB</th>
+                                <th>Address</th>
+                                <th style="width: 120px;" class="text-center">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for(item of patientList();track $index){
+                                <tr>
+                                <td>{{item.patientId}}</td>
+                                <td>{{item.fullName}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.gender}}</td>
+                                <td>{{item.dateOfBirth}}</td>
+                                <td>{{item.address}}</td>
+                                    <!-- Action Buttons -->
+                                    <td class="d-flex gap-2 justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-primary" >
+                                            <i class="bi bi-pencil"></i>
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" >
+                                        <!-- (click)="onDelete(item.medicineId)" -->
+                                        
+                                            <i class="bi bi-trash"></i>
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>   
+                                }       
+                        
+                            
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        
+        @if(isFormOpen()){
+        <div class="col-4">
+        <app-register-patient [showBanner]="false" ></app-register-patient>
+    </div>
+    }
+
+         
+
+        
+    
+    </div>
+    
+</div>

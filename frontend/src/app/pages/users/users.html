@@ -4,7 +4,9 @@
         <!-- ================= USER TABLE ================= -->
         <div [ngClass]="isFormOpen ? 'col-8' : 'col-12'">
 
-            <div class="card shadow-sm">
+
+
+            <div class="card cm-page-card">
 
                 <!-- Table Header -->
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -13,10 +15,31 @@
                         User Management
                     </h5>
 
-                    <button type="button" class="btn btn-primary" (click)="toggleFormVisibility()">
-                        <i class="bi bi-plus-lg"></i>
-                        Add User
-                    </button>
+                    <div class="d-flex align-items-center gap-2">
+
+                        <select #searchTemp class="form-select" style="width: 150px;">
+                            <option value="All">All Roles</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+
+                        <button type="button" class="btn btn-primary" (click)="onSearch()">
+                            <i class="bi bi-search"></i>
+                            Search
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" (click)="onResetfilter()">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Reset
+                        </button>
+
+                        <button type="button" class="btn btn-success" (click)="toggleFormVisibility()">
+                            <i class="bi bi-plus-lg"></i>
+                            Add User
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -84,6 +107,13 @@
 
                             </tr>
 
+                            } @empty {
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <i class="bi bi-inbox fs-4 d-block mb-1"></i>
+                                    No users found
+                                </td>
+                            </tr>
                             }
 
                         </tbody>
@@ -103,16 +133,14 @@
 
         <div class="col-4">
 
-            <div class="card shadow-sm">
+            <div class="card cm-form-panel">
 
                 <!-- Form Header -->
-                <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+                <div class="cm-form-panel-header">
 
-                    <h5 class="mb-0">
-                        Add User
-                    </h5>
+                    <h5>Add User</h5>
 
-                    <button type="button" class="btn btn-sm btn-light" (click)="toggleFormVisibility()">
+                    <button type="button" class="cm-form-panel-close" (click)="toggleFormVisibility()">
                         <i class="bi bi-x-lg"></i>
                         Close
                     </button>

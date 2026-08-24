@@ -6,7 +6,13 @@ export const GlobalConstants={
         UPDATEUSER:"staff/",
         DELETEUSER:"DeleteUser",
         GETUSERBYID:"GetUserById",
-        
+        FILTER_USER:"staff?roleName=",
+        PATIENT:"patients",
+        GETALLMEDICINE:"Medicines",
+        CREATE_MEDICINE:"Medicines",
+        UPDATE_MEDICINE:"Medicines",
+        DELETE_MEDICINE:"Medicines/",
+        GET_MEDICINE_BY_ID:"Medicines/",
     },
     REG_EXP:{
         EMAIL:'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -20,5 +26,16 @@ export const GlobalConstants={
         PASSWORD_MAX_LENGTH:'Password must be at most 20 characters long',
         PASSWORD_MISMATCH:'Passwords do not match',
         
-    }
+    },
+    LOGGED_USER_SESSION_NAME:"hospitalUser",
+    TOKEN_SESSION_NAME:"token",
+    MEDICINE_FORM_LIST:[
+        "Tablet",
+        "Capsule",
+        "Syrup",
+        "Injection",
+        "Ointment",
+    
+    ]
+    
 }

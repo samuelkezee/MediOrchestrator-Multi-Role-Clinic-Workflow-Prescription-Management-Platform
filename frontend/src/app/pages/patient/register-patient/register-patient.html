@@ -1,0 +1,153 @@
+<div class="container-fluid">
+    <div class="row min-vh-100">
+
+        <!-- ================= LEFT BANNER ================= -->
+        @if(showBanner){
+        <div class="col-lg-5 cm-auth-banner">
+
+            <div class="cm-auth-banner-content">
+
+                <!-- Hospital logo -->
+                <div class="cm-auth-logo">+</div>
+
+                <h1>CityCare Hospital</h1>
+
+                <h4 class="mt-3">Your Health, Our Priority</h4>
+
+                <p class="cm-auth-banner-desc mt-3">
+                    Welcome to CityCare Hospital. Create your patient
+                    account to easily manage your appointments and
+                    access our healthcare services.
+                </p>
+
+                <div class="cm-auth-features">
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Easy Appointment Booking
+                    </div>
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Experienced Healthcare Professionals
+                    </div>
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Secure Patient Information
+                    </div>
+
+                    <div class="cm-auth-feature">
+                        <span class="cm-auth-feature-icon">✓</span>
+                        Convenient Healthcare Services
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        }
+
+        <!-- ================= RIGHT FORM ================= -->
+        <div class="cm-auth-form-section" [class.col-lg-7]="showBanner" [class.col-12]="!showBanner">
+
+            <div class="cm-auth-card">
+
+                <h2 class="cm-auth-card-title">Welcome to CityCare</h2>
+                <p class="cm-auth-card-subtitle">Create your patient account</p>
+
+                <!-- Information block -->
+                <div class="cm-info-block">
+                    <strong>Get started with your healthcare journey.</strong>
+                    <p class="mb-0 mt-1">
+                        Please provide your personal details to register as a patient.
+                    </p>
+                </div>
+
+
+                <form>
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label
+                         cm-form-label">
+                            Full Name
+                        </label>
+                        <input type="text" id="fullName" [(ngModel)]="newPatientObj.fullName" name="fullName"
+                            class="form-control cm-form-control" placeholder="Enter your full name">
+                    </div>
+
+
+                    <!-- Gender + Date of Birth -->
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label cm-form-label">
+                                Gender
+                            </label>
+                            <select id="gender" [(ngModel)]="newPatientObj.gender" name="gender"
+                                class="form-select cm-form-select">
+                                <option selected disabled>Select gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="dateOfBirth" class="form-label cm-form-label">
+                                Date of Birth
+                            </label>
+                            <input type="date" id="dateOfBirth" class="form-control cm-form-control"
+                                [(ngModel)]="newPatientObj.dateOfBirth" name="dateOfBirth">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label cm-form-label">
+                            Phone Number
+                        </label>
+                        <input type="tel" id="phone" class="form-control cm-form-control"
+                            placeholder="Enter your phone number" [(ngModel)]="newPatientObj.phone" name="phone">
+                    </div>
+
+
+                    <!-- Address -->
+                    <div class="mb-4">
+                        <label for="address" class="form-label cm-form-label">
+                            Address
+                        </label>
+                        <textarea id="address" class="form-control cm-form-control" rows="3" name="Address"
+                            placeholder="Enter your address" [(ngModel)]="newPatientObj.address"></textarea>
+                    </div>
+
+
+                    <!-- Register Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn cm-btn cm-btn-primary cm-btn-block" (click)="onRegister()">
+                            Create Patient Account
+
+                        </button>
+                    </div>
+
+
+                    <!-- Login link -->
+                    @if (showBanner) {
+                    <div class="cm-auth-link-section">
+                        <span>Already have an account?</span>
+                        <a href="#">Login</a>
+                    </div>
+                    }
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

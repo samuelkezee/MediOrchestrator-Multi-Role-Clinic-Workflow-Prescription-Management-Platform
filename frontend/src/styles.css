@@ -1,1 +1,558 @@
-/* You can add global styles to this file, and also import other style files */
+/* ================================================================
+   CLINIC MANAGER — GLOBAL DESIGN SYSTEM
+   Single source of truth for all shared styles.
+   Component files should ONLY contain truly page-unique layout.
+   ================================================================ */
+
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ================================================================ */
+
+:root {
+
+    /* --- Brand Colors --- */
+    --cm-primary:        #087f8c;   /* Clinic teal */
+    --cm-primary-dark:   #066b76;   /* Teal hover */
+    --cm-primary-light:  #eef8f9;   /* Teal tint bg */
+    --cm-primary-border: rgba(8, 127, 140, 0.25);
+
+    /* --- Neutrals --- */
+    --cm-dark:           #12343b;
+    --cm-text-primary:   #34495e;
+    --cm-text-muted:     #6c757d;
+    --cm-text-white:     #ffffff;
+    --cm-border:         #d9e2e7;
+    --cm-bg-page:        #f4f8fb;
+    --cm-bg-white:       #ffffff;
+    --cm-bg-light:       #f8f9fa;
+    --cm-bg-subtle:      #eef8f9;
+
+    /* --- Sidebar / Dark Surface --- */
+    --cm-sidebar-bg:     #212529;
+    --cm-sidebar-hover:  #343a40;
+    --cm-sidebar-border: #6c757d;
+
+    /* --- Feedback Colors --- */
+    --cm-danger:         #dc3545;
+    --cm-success:        #198754;
+    --cm-warning:        #ffc107;
+
+    /* --- Typography --- */
+    --cm-font-family:    'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --cm-font-size-base: 15px;
+    --cm-font-size-sm:   13px;
+    --cm-font-size-lg:   17px;
+
+    /* --- Spacing --- */
+    --cm-spacing-xs:   6px;
+    --cm-spacing-sm:  12px;
+    --cm-spacing-md:  20px;
+    --cm-spacing-lg:  32px;
+    --cm-spacing-xl:  48px;
+
+    /* --- Borders & Shadows --- */
+    --cm-radius-sm:    6px;
+    --cm-radius-md:    9px;
+    --cm-radius-lg:   14px;
+    --cm-radius-xl:   18px;
+    --cm-radius-full: 50%;
+
+    --cm-shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
+    --cm-shadow-md:   0 4px 18px rgba(0,0,0,0.08);
+    --cm-shadow-lg:   0 10px 35px rgba(0,0,0,0.10);
+
+    /* --- Transitions --- */
+    --cm-transition: 0.2s ease;
+}
+
+
+/* ================================================================
+   2. BASE / RESET
+   ================================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: var(--cm-font-family);
+    font-size: var(--cm-font-size-base);
+    background-color: var(--cm-bg-page);
+    color: var(--cm-text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ================================================================
+   3. BOOTSTRAP THEME OVERRIDES
+   Override Bootstrap defaults to match the clinic's teal theme.
+   ================================================================ */
+
+/* --- Primary button → teal --- */
+.btn-primary {
+    background-color: var(--cm-primary);
+    border-color: var(--cm-primary);
+    color: var(--cm-text-white);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    background-color: var(--cm-primary-dark) !important;
+    border-color: var(--cm-primary-dark) !important;
+    color: var(--cm-text-white) !important;
+}
+
+.btn-primary:focus,
+.btn-primary:focus-visible {
+    box-shadow: 0 0 0 0.2rem var(--cm-primary-border) !important;
+}
+
+/* --- Form control focus ring → teal --- */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--cm-primary) !important;
+    box-shadow: 0 0 0 0.2rem var(--cm-primary-border) !important;
+}
+
+/* --- Nav active link → teal --- */
+.nav-item.active {
+    background-color: var(--cm-primary) !important;
+}
+
+/* --- Danger link color --- */
+a {
+    color: var(--cm-primary);
+}
+
+a:hover {
+    color: var(--cm-primary-dark);
+}
+
+
+/* ================================================================
+   4. SHARED COMPONENT CLASSES  (cm-* prefix)
+   Reference these in templates instead of writing per-file CSS.
+   ================================================================ */
+
+
+/* ---------------------------------------------------------------
+   4a. PAGE LAYOUT
+   --------------------------------------------------------------- */
+
+/* Full-page background used on management pages */
+.cm-page {
+    background-color: var(--cm-bg-page);
+    min-height: 100vh;
+    padding: var(--cm-spacing-md);
+}
+
+
+/* ---------------------------------------------------------------
+   4b. MANAGEMENT PAGE CARD
+   The main white card wrapping a data table or content area.
+   Usage: add class="cm-page-card" alongside Bootstrap's "card"
+   --------------------------------------------------------------- */
+
+.cm-page-card {
+    background-color: var(--cm-bg-white);
+    border-radius: var(--cm-radius-lg);
+    box-shadow: var(--cm-shadow-md);
+    border: none;
+}
+
+/* Card header — consistent grey title bar */
+.cm-page-card > .card-header,
+.cm-card-header {
+    background-color: var(--cm-bg-light);
+    border-bottom: 1px solid var(--cm-border);
+    padding: 14px 20px;
+    border-radius: var(--cm-radius-lg) var(--cm-radius-lg) 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cm-page-card > .card-header h5,
+.cm-card-header h5 {
+    margin: 0;
+    font-weight: 600;
+    color: var(--cm-dark);
+    font-size: 16px;
+}
+
+
+/* ---------------------------------------------------------------
+   4c. FORM PANEL  (the col-4 side panel for Add / Edit forms)
+   Usage: add class="cm-form-panel" alongside Bootstrap's "card"
+   --------------------------------------------------------------- */
+
+.cm-form-panel {
+    background-color: var(--cm-bg-white);
+    border-radius: var(--cm-radius-lg);
+    box-shadow: var(--cm-shadow-md);
+    border: none;
+}
+
+/* Teal accent header — replaces the old bg-warning (yellow) */
+.cm-form-panel-header {
+    background: linear-gradient(135deg, var(--cm-primary), var(--cm-primary-dark));
+    color: var(--cm-text-white);
+    padding: 14px 20px;
+    border-radius: var(--cm-radius-lg) var(--cm-radius-lg) 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cm-form-panel-header h5 {
+    margin: 0;
+    font-weight: 600;
+    color: var(--cm-text-white);
+    font-size: 16px;
+}
+
+/* Close button inside form panel header */
+.cm-form-panel-close {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: var(--cm-text-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--cm-radius-sm);
+    padding: 4px 10px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color var(--cm-transition);
+    cursor: pointer;
+}
+
+.cm-form-panel-close:hover {
+    background-color: rgba(255, 255, 255, 0.32);
+    color: var(--cm-text-white);
+}
+
+
+/* ---------------------------------------------------------------
+   4d. FORM ELEMENTS
+   Refined inputs that layer on top of Bootstrap defaults.
+   --------------------------------------------------------------- */
+
+.cm-form-label {
+    font-weight: 500;
+    color: var(--cm-text-primary);
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.cm-form-control,
+.cm-form-select {
+    padding: 11px 14px;
+    border-radius: var(--cm-radius-md);
+    border: 1px solid var(--cm-border);
+    font-size: 14px;
+    transition: border-color var(--cm-transition), box-shadow var(--cm-transition);
+}
+
+.cm-form-control:focus,
+.cm-form-select:focus {
+    border-color: var(--cm-primary);
+    box-shadow: 0 0 0 0.2rem var(--cm-primary-border);
+    outline: none;
+}
+
+/* Required asterisk */
+.cm-required {
+    color: var(--cm-danger);
+    margin-left: 2px;
+}
+
+/* Info/hint block below form header */
+.cm-info-block {
+    background-color: var(--cm-bg-subtle);
+    border-left: 4px solid var(--cm-primary);
+    padding: 12px 16px;
+    border-radius: var(--cm-radius-sm);
+    color: #34545a;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+
+/* ---------------------------------------------------------------
+   4e. ACTION BUTTONS
+   --------------------------------------------------------------- */
+
+/* Primary teal action button */
+.cm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: var(--cm-radius-md);
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--cm-transition), transform var(--cm-transition);
+}
+
+.cm-btn:active {
+    transform: scale(0.98);
+}
+
+.cm-btn-primary {
+    background-color: var(--cm-primary);
+    color: var(--cm-text-white);
+}
+
+.cm-btn-primary:hover {
+    background-color: var(--cm-primary-dark);
+    color: var(--cm-text-white);
+}
+
+.cm-btn-secondary {
+    background-color: var(--cm-bg-light);
+    color: var(--cm-text-primary);
+    border: 1px solid var(--cm-border);
+}
+
+.cm-btn-secondary:hover {
+    background-color: #e2e8ed;
+    color: var(--cm-text-primary);
+}
+
+.cm-btn-danger {
+    background-color: var(--cm-danger);
+    color: var(--cm-text-white);
+}
+
+.cm-btn-danger:hover {
+    background-color: #b02a37;
+    color: var(--cm-text-white);
+}
+
+/* Full-width submit button */
+.cm-btn-block {
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+}
+
+
+/* ---------------------------------------------------------------
+   4f. TABLE
+   --------------------------------------------------------------- */
+
+.cm-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cm-table thead th {
+    background-color: var(--cm-bg-light);
+    color: var(--cm-text-primary);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 11px 14px;
+    border-bottom: 2px solid var(--cm-border);
+    white-space: nowrap;
+}
+
+.cm-table tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f0f4f7;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.cm-table tbody tr:hover {
+    background-color: #f5fafb;
+}
+
+/* Empty state row */
+.cm-table-empty {
+    text-align: center;
+    padding: 36px;
+    color: var(--cm-text-muted);
+}
+
+.cm-table-empty i {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+/* ---------------------------------------------------------------
+   4g. AUTH PAGES  (Login & Register-Patient)
+   Two-column split: left banner + right form card
+   --------------------------------------------------------------- */
+
+/* Left hospital branding banner */
+.cm-auth-banner {
+    background: linear-gradient(135deg, var(--cm-primary) 0%, var(--cm-primary-dark) 100%);
+    color: var(--cm-text-white);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 60px;
+}
+
+/* Banner inner content block */
+.cm-auth-banner-content {
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Clinic logo box */
+.cm-auth-logo {
+    width: 65px;
+    height: 65px;
+    background-color: var(--cm-bg-white);
+    color: var(--cm-primary);
+    border-radius: var(--cm-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.cm-auth-banner h1 {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+.cm-auth-banner h4 {
+    font-weight: 500;
+}
+
+.cm-auth-banner-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Feature checklist items */
+.cm-auth-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.cm-auth-feature {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cm-auth-feature-icon {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Right form section centering */
+.cm-auth-form-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: var(--cm-bg-page);
+}
+
+/* The white card holding the form */
+.cm-auth-card {
+    width: 100%;
+    max-width: 650px;
+    background-color: var(--cm-bg-white);
+    padding: 40px;
+    border-radius: var(--cm-radius-xl);
+    box-shadow: var(--cm-shadow-lg);
+}
+
+/* Auth card narrower variant for login */
+.cm-auth-card--narrow {
+    max-width: 460px;
+}
+
+.cm-auth-card-title {
+    color: var(--cm-dark);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.cm-auth-card-subtitle {
+    color: var(--cm-text-muted);
+    margin-bottom: 24px;
+}
+
+/* Link inside auth cards (Login / Sign up) */
+.cm-auth-link-section {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--cm-text-muted);
+}
+
+.cm-auth-link-section a {
+    color: var(--cm-primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.cm-auth-link-section a:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================================
+   5. RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 991px) {
+
+    .cm-auth-banner {
+        min-height: auto;
+        padding: 45px 30px;
+    }
+
+    .cm-auth-banner h1 {
+        font-size: 32px;
+    }
+
+    .cm-auth-form-section {
+        min-height: auto;
+        padding: 30px 16px;
+    }
+
+    .cm-auth-card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .cm-auth-banner {
+        padding: 35px 20px;
+    }
+
+    .cm-auth-form-section {
+        padding: 20px 10px;
+    }
+
+    .cm-auth-card {
+        padding: 24px 18px;
+    }
+}

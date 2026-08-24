@@ -1,11 +1,10 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
-  imports: [NgClass, RouterOutlet],
+  imports: [NgClass, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })
@@ -26,9 +25,10 @@ export class Layout {
   }
 
   onLogoff(){
-    sessionStorage.removeItem("hospitalUser")
-    this.router.navigateByUrl("/login")
-
+    sessionStorage.removeItem("hospitalUser");
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
+    this.router.navigateByUrl("/login");
   }
 
   togglesidebar() {
@@ -37,3 +37,4 @@ export class Layout {
 
 
 }
+

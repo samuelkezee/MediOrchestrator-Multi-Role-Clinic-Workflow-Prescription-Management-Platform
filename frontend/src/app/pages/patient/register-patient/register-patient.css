@@ -1,0 +1,13 @@
+/*
+  register-patient.css
+  -----------------------------------------------------------------------
+  LAYOUT-ONLY styles for the register patient page.
+
+  All colors, borders, shadows, typography, and reusable component
+  styles are defined in src/styles.css (cm-auth-banner, cm-auth-card,
+  cm-form-control, etc.) — refer there when building new pages.
+  -----------------------------------------------------------------------
+*/
+
+/* Nothing page-specific needed beyond the shared cm-* classes.
+   Keep this file for future layout overrides unique to this page. */

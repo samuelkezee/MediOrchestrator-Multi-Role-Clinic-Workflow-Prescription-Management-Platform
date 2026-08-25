@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PatientModel } from '../models/class/Patient.Model';
 import { IPatientListModel } from '../models/interfaces/IPatientList.Model';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { GlobalConstants } from '../constants/GlobalConstants';
 import { Observable } from 'rxjs';
 

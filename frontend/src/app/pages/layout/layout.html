@@ -33,11 +33,12 @@
 
         <!-- Navigation -->
         <nav class="sidebar-menu">
-
-            <a routerLink="/users" routerLinkActive="active" class="nav-item">
-                <i class="bi bi-house"></i>
-                <span>users</span>
-            </a>
+            @for(menuItem of menuItemList;track $index){
+                <a routerLink="/{{menuItem.router}}" routerLinkActive="active" class="nav-item">
+                    <i class="{{menuItem.icon}}"></i>
+                    <span>{{menuItem.title}}</span>
+                </a>
+            }
 
             <a routerLink="/medicine-master" routerLinkActive="active" class="nav-item">
                 <i class="bi bi-speedometer2"></i>
@@ -49,9 +50,9 @@
                 <span>Patient</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a routerLink="/visits" routerLinkActive="active" class="nav-item">
                 <i class="bi bi-person-badge"></i>
-                <span>Doctors</span>
+                <span>visits</span>
             </a>
 
             <a href="#" class="nav-item">

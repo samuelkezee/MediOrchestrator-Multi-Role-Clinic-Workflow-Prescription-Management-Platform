@@ -83,8 +83,9 @@ export class Users implements OnInit {
 
 
   onSearch(){
-    const selectedRole=this.searchdropDown.nativeElement.value;
-     this.usrServ.filterUsers(selectedRole).subscribe({
+    const selectedRole = this.searchdropDown.nativeElement.value;
+    
+    this.usrServ.filterUsers('?roleName=' + selectedRole).subscribe({
       next: (res: any) => {
         console.log('[filterUsers] Raw API Response:', res);
         // Handle both direct array and wrapped responses (res.data or res)

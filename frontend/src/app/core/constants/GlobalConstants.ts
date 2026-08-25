@@ -36,6 +36,13 @@ export const GlobalConstants={
         "Injection",
         "Ointment",
     
-    ]
+    ],
+    ROLE:{
+        DOCTOR:"Doctor",
+        PATIENT:"Patient",
+        RECEPTIONIST:"Receptionist"
+
+        
+    }
     
 }

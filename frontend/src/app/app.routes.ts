@@ -6,6 +6,7 @@ import { MedicinesMaster } from './pages/medicines-master/medicines-master';
 import { authGuard } from './core/guards/auth.guard';
 import { RegisterPatient } from './pages/patient/register-patient/register-patient';
 import { PatientList } from './pages/patient/patient-list/patient-list';
+import { Visits } from './pages/visits/visits';
 
 export const routes: Routes = [
     {
@@ -36,6 +37,10 @@ export const routes: Routes = [
             },{
                 path: 'patient-list',
                 component:PatientList
+            },
+            {
+                path: 'visits',
+                component:Visits
             }
         ]
     }

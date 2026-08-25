@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { menuitems } from '../../core/constants/Menu.Constants';
 
 @Component({
   selector: 'app-layout',
@@ -12,6 +13,8 @@ export class Layout {
 
   isSidebarExpanded: boolean = true;
   loggedUserData: any;
+  menuItemList=menuitems;
+
 
   constructor(private router:Router) {
     const loggedData = sessionStorage.getItem("hospitalUser");

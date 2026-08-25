@@ -3,6 +3,9 @@
 MediOrchestrator is a modern, responsive **Angular-based** clinic management application designed to handle patient registration, staff coordination, medicine directories, and digital prescriptions. It features a role-based access system catering to **Doctors**, **Receptionists**, and **Patients**.
 
 The application communicates with a secure backend API hosted at:
+`https://testprojectapi.gerasim.in/swagger/index.html`
+
+Take the endpoints of:
 `https://testprojectapi.gerasim.in/api/HospitalPrescriptions/`
 
 ---

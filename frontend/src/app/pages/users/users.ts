@@ -62,10 +62,10 @@ export class Users implements OnInit {
 
   getAllUsers(): void {
     this.usrServ.getAllUsers().subscribe({
-      next: (res: any) => {
+      next: (res: LoginAPIResponseModel[]) => {
         console.log('[getAllUsers] Raw API Response:', res);
         // Handle both direct array and wrapped responses (res.data or res)
-        const list = Array.isArray(res) ? res : (res?.data || []);
+        const list = res;
         console.log('[getAllUsers] Parsed user list length:', list.length, list);
         this.userList.set(list);
       },
@@ -82,23 +82,23 @@ export class Users implements OnInit {
 
 
 
-  onSearch(){
-    const selectedRole = this.searchdropDown.nativeElement.value;
-    
-    this.usrServ.filterUsers('?roleName=' + selectedRole).subscribe({
-      next: (res: any) => {
-        console.log('[filterUsers] Raw API Response:', res);
-        // Handle both direct array and wrapped responses (res.data or res)
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        console.log('[filterUsers] Parsed user list length:', list.length, list);
-        this.userList.set(list);
-      },
-      error: (error: any) => {
-        console.error('[filterUsers] API Error:', error);
-      }
-    });
-  }
+  onSearch() {
+  const selectedRole = this.searchdropDown.nativeElement.value;
 
+  this.usrServ.filterUsers(selectedRole).subscribe({
+    next: (res: LoginAPIResponseModel[]) => {
+      console.log('[filterUsers] Raw API Response:', res);
+      // Handle both direct array and wrapped responses (res.data or res)
+      const list = res;
+      console.log('[filterUsers] Parsed user list length:', list.length, list);
+      this.userList.set(list);
+    },
+    error: (error: any) => {
+      console.error('[filterUsers] API Error:', error);
+    }
+  });
+}
+ 
   onSave(): void {
 
     // Check form validation

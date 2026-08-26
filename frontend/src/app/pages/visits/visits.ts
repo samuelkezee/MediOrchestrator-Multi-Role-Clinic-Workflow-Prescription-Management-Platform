@@ -4,9 +4,11 @@ import { PatientService } from '../../core/services/patient-service';
 import { IPatientListModel } from '../../core/models/interfaces/IPatientList.Model';
 import { Subscription } from 'rxjs';
 import { Userservices } from '../../core/services/userservices';
-import { LoginModel } from '../../core/models/class/User.Model';
+import { LoginAPIResponseModel } from '../../core/models/interfaces/User.Model';
 import { GlobalConstants } from '../../core/constants/GlobalConstants';
 import { Observable } from 'rxjs';
+import { VisitService } from '../../core/services/visit-service';
+import { IVisitListModel } from '../../core/models/interfaces/IVisit.Model';
 
 @Component({
   selector: 'app-visits',
@@ -23,17 +25,21 @@ export class Visits implements OnInit,OnDestroy{
 
   patientSrv=inject(PatientService);
   userSrv=inject(Userservices)
+  visitSrv=inject(VisitService)
  
-  doctorList:WritableSignal<LoginModel[]>=signal([]);
-
+ 
 
   subscriptionList:Subscription[] =[];
   patientList$:Observable<IPatientListModel[]>=new Observable<IPatientListModel[]>();
+  DoctorList$:Observable<LoginAPIResponseModel[]>=new Observable<LoginAPIResponseModel[]>();
+  visitList$:Observable<IVisitListModel[]>=new Observable<IVisitListModel[]>();
   
 
   ngOnInit(){
     // this.getAllpatients();
+    this.DoctorList$=this.userSrv.filterUsers(String(GlobalConstants.ROLE.DOCTOR));
     this.patientList$=this.patientSrv.getAllPatients();
+    this.visitList$=this.visitSrv.getVisitsList();
   }
 
 
@@ -49,26 +55,34 @@ export class Visits implements OnInit,OnDestroy{
 
   // }
 
-  getAllDoctors(){
-    this.subscriptionList.push(this.userSrv.filterUsers('?roleName=' + GlobalConstants.ROLE.DOCTOR).subscribe({
-      next:(res:any)=>{
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        this.doctorList.set(list);
-      },
-      error:(err:any)=>{
-        console.log(err);
-      } 
-    }));
-  }
+//   getAllDoctors() {
+//   this.subscriptionList.push(
+//     this.userSrv
+//       .filterUsers(String(GlobalConstants.ROLE.DOCTOR))
+//       .subscribe({
+//         next: (res: any) => {
+//           const list = Array.isArray(res) ? res : (res || []);
+//           this.DoctorList$ = list;
+//         },
+//         error: (err) => {
+//           console.log(err);
+//         }
+//       })
+//   );
+// }
 
   ngOnDestroy(){
     this.subscriptionList.forEach((sub:Subscription)=>sub.unsubscribe());
   }  
 
-
-
-
-
-
-
+  // getAllVisits(){
+  //   this.subscriptionList.push(this.visitSrv.getVisitsList().subscribe({
+  //     next:(res:IVisitListModel[])=>{
+  //       this.visitList.set(res);
+  //     },
+  //     error:(err:any)=>{
+  //       console.log(err);
+  //     }
+  //   }));
+  // }
 }

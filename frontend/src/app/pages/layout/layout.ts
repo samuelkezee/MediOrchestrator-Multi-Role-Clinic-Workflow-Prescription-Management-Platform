@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { menuitems } from '../../core/constants/Menu.Constants';
+import {menuItem} from '../../core/constants/Menu.Constants';
 
 @Component({
   selector: 'app-layout',
@@ -13,7 +13,8 @@ export class Layout {
 
   isSidebarExpanded: boolean = true;
   loggedUserData: any;
-  menuItemList=menuitems;
+  menuItemList=menuItem;
+  //constant data cannot be used directly into HTML ,so create a variable
 
 
   constructor(private router:Router) {

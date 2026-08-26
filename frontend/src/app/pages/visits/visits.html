@@ -16,16 +16,13 @@
                     <div class="d-flex align-items-center gap-2">
 
                         <!-- Search -->
-                        <input type="text"
-                               class="form-control"
-                               placeholder="Search medicine..."
-                               style="width: 180px;">
-                               <!-- [ngModel]="searchMedicine()"
+                        <input type="text" class="form-control" placeholder="Search medicine..." style="width: 180px;">
+                        <!-- [ngModel]="searchMedicine()"
                                (ngModelChange)="searchMedicine.set($event)" -->
 
                         <!-- Form Filter -->
                         <select class="form-select" style="width: 150px;">
-                             <!-- [ngModel]="selectedMedicine()" (ngModelChange)="selectedMedicine.set($event)"  -->
+                            <!-- [ngModel]="selectedMedicine()" (ngModelChange)="selectedMedicine.set($event)"  -->
                             <option value="">All Forms</option>
                             <option value="Tablet">Tablet</option>
                             <option value="Capsule">Capsule</option>
@@ -35,13 +32,13 @@
                         </select>
 
                         <!-- Reset -->
-                        <button type="button" class="btn btn-secondary">    
+                        <button type="button" class="btn btn-secondary">
                             <i class="bi bi-arrow-clockwise me-1"></i>
                             Reset
                         </button>
 
                         <!-- Add Medicine -->
-                        <button type="button" class="btn btn-success" >
+                        <button type="button" class="btn btn-success">
                             <i class="bi bi-plus-lg me-1"></i>
                             Add Medicine
                         </button>
@@ -59,10 +56,13 @@
                         <thead class="table-light">
                             <tr>
                                 <th>S.No</th>
-                                <th style="width: 120px;">Medicine Id</th>
-                                <th>Medicine Name</th>
-                                <th>Form</th>
-                                <th>Strength</th>
+                                <th style="width: 120px;">Patient Id</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Visit Date</th>
+                                <th>Symptoms</th>
+                                <th>Diagnosis</th>
+                                <th>Visit Status</th>
                                 <th style="width: 120px;" class="text-center">
                                     Actions
                                 </th>
@@ -70,32 +70,35 @@
                         </thead>
 
                         <tbody>
+
+                            @for (item of visitList$ | async; track $index) {
+
                             <tr>
-                            <!-- @for(item of item , track item.patientId){
-                                <tr>
-                                    <td>{{$index + 1}}</td>
-                                    <td>{{item.patientId}}</td>
-                                    <td>{{item.fullName}}</td>
-                                    <td>{{item.gender}}</td>
-                                    <td>{{item.dateOfBirth}}</td>
-                                    <td>{{item.phone}}</td>
-                                    <td>{{item.address}}</td> -->
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ item.patientId }}</td>
+                                <td>{{ item.patientName }}</td>
+                                <td>{{ item.doctorName }}</td>
+                                <td>{{ item.visitDate }}</td>
+                                <td>{{ item.symptoms }}</td>
+                                <td>{{ item.diagnosis }}</td>
+                                <td>{{ item.visitStatus }}</td>
 
-                                    <!-- Action Buttons -->
-                                    <td class="d-flex gap-2 justify-content-center">
-                                        <button type="button" class="btn btn-sm btn-primary" >
-                                            <i class="bi bi-pencil"></i>
-                                            Edit
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash"></i>
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            <!-- }    -->
+                                <td class="d-flex gap-2 justify-content-center">
 
+                                    <button type="button" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil"></i>
+                                        Edit
+                                    </button>
 
+                                    <button type="button" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                        Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+
+                            }
 
                         </tbody>
 
@@ -109,8 +112,8 @@
 
 
         <!-- ================= ADD / EDIT MEDICINE FORM ================= -->
-         @if(isFormOpen()){
-            <div class="col-4">
+        @if(isFormOpen()){
+        <div class="col-4">
 
             <div class="card cm-form-panel">
 
@@ -118,11 +121,10 @@
                 <div class="cm-form-panel-header">
 
                     <h5>
-                       Visit
+                        Visit
                     </h5>
 
-                    <button type="button"
-                            class="cm-form-panel-close" (click)="toggleFormVisibility()">
+                    <button type="button" class="cm-form-panel-close" (click)="toggleFormVisibility()">
                         <i class="bi bi-x-lg"></i>
                         Close
                     </button>
@@ -148,7 +150,7 @@
 
                                 <select class="form-select" id="medicineFormType">
                                     @for (item of patientList$|async; track $index) {
-                                        <option value="{{item.patientId}}">{{item.fullName}}-{{item.patientId}}</option>
+                                    <option value="{{item.patientId}}">{{item.fullName}}-{{item.patientId}}</option>
                                     }
                                 </select>
                             </div>
@@ -157,15 +159,15 @@
                             <!-- Form Type -->
                             <div class="col-12 mb-3">
 
-                                <label for="medicineFormType" class="form-label">
-                                    Form Type
+                                <label for="doctorList" class="form-label">
+                                    Doctor
                                     <span class="text-danger">*</span>
                                 </label>
 
-                                <select class="form-select" id="medicineFormType">
-                                    <!-- @for(item of doctorList(); track $index){
-                                        <option value="{{item.userId}}">{{item.fullName}}-{{item.userId}}</option> -->
-                                    <!-- } -->
+                                <select class="form-select" id="doctorList">
+                                    @for(item of DoctorList$|async ; track $index){
+                                    <option value="{{item.id}}">{{item.id}}-{{item.fullName}}</option>
+                                    }
                                 </select>
 
                             </div>
@@ -179,10 +181,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text"
-                                       class="form-control"
-                                       id="medicineStrength"
-                                       placeholder="e.g. 500mg, 10ml, 5%">
+                                <input type="text" class="form-control" id="medicineStrength"
+                                    placeholder="e.g. 500mg, 10ml, 5%">
 
                             </div>
 
@@ -190,14 +190,11 @@
                             <!-- Buttons -->
                             <div class="col-12 d-flex justify-content-end gap-2 mt-3">
 
-                                <button type="button"
-                                        class="btn btn-secondary"
-                                        >
+                                <button type="button" class="btn btn-secondary">
                                     Reset
                                 </button>
 
-                                <button type="submit"
-                                        class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     Visit
                                 </button>
 
@@ -212,10 +209,10 @@
             </div>
 
         </div>
-         }
+        }
 
-        
-    
+
+
 
     </div>
 

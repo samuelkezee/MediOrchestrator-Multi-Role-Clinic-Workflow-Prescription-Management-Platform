@@ -39,8 +39,12 @@ export class Userservices {
   }
 
   filterUsers(searchText: string): Observable<LoginAPIResponseModel[]> {
-    return this.http.get<LoginAPIResponseModel[]>(environment.API_URL + GlobalConstants.API_METHODS.GETALLUSERS + searchText)
-  }
+  return this.http.get<LoginAPIResponseModel[]>(
+    environment.API_URL +
+    GlobalConstants.API_METHODS.GETALLUSERS +
+    '?roleName=' + searchText
+  );
+}
 
   onGetUserById(id: number) {
     return this.http.get(environment.API_URL + GlobalConstants.API_METHODS.GETUSERBYID + id)

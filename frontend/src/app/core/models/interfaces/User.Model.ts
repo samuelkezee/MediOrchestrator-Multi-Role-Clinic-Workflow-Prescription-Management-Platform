@@ -7,5 +7,6 @@ export interface LoginAPIResponseModel {
     roleName: string;
     isActive: boolean;
     token?: string;
+    projectName?: string;
 }
 

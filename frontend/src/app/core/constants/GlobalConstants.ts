@@ -13,6 +13,8 @@ export const GlobalConstants={
         UPDATE_MEDICINE:"Medicines",
         DELETE_MEDICINE:"Medicines/",
         GET_MEDICINE_BY_ID:"Medicines/",
+        GET_VISIT:"visits",
+        CREATE_VISIT:"visits",
     },
     REG_EXP:{
         EMAIL:'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',

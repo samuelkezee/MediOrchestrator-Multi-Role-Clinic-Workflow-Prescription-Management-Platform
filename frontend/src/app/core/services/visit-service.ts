@@ -18,7 +18,7 @@ export class VisitService {
   getVisitsList():Observable<IVisitListModel[]>{
     return this.http.get<IVisitListModel[]>(environment.API_URL+GlobalConstants.API_METHODS.GET_VISIT)
   }
-  getVistbyid(id:number){
-    return this.http.get<IVisitListModel>(environment.API_URL+GlobalConstants.API_METHODS.GET_VISIT+id)
+  getPatientVisitById(id:number):Observable<IVisitListModel[]>{
+    return this.http.get<IVisitListModel[]>(environment.API_URL+GlobalConstants.API_METHODS.VISIT_BY_PATIENT+id)
   }
 }

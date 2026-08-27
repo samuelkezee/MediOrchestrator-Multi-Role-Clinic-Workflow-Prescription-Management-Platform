@@ -1,0 +1,736 @@
+<div class="container-fluid py-3">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         ========================================================= -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+
+        <div>
+
+            <button type="button" class="btn btn-sm btn-light border">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Visits
+
+            </button>
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+
+                <i class="bi bi-person me-1"></i>
+                Open Patient
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         PATIENT HEADER
+         ========================================================= -->
+    <div class="card cm-page-card mb-3">
+
+        <div class="card-body">
+
+            <div class="row align-items-center g-3">
+
+                <!-- Patient Avatar -->
+                <div class="col-auto">
+
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="
+                            width:60px;
+                            height:60px;
+                            background-color:var(--cm-primary-light);
+                            color:var(--cm-primary);
+                            font-size:20px;
+                            font-weight:700;
+                         ">
+
+                        SK
+
+                    </div>
+
+                </div>
+
+
+                <!-- Patient Identity -->
+                <div class="col">
+
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+
+                        <h4 class="mb-0 fw-semibold" style="color:var(--cm-dark);">
+
+                            {{patientData().fullName}}
+
+                        </h4>
+
+                        <span class="badge bg-success-subtle text-success">
+
+                            Active
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="text-muted small mt-1">
+
+                        Patient ID:
+                        <strong>{{patientData().patientId}}</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick Information -->
+                <div class="col-12 col-xl-auto">
+
+                    <div class="d-flex flex-wrap gap-4">
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Age
+                            </small>
+
+                            <strong>
+                                28 Years
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Gender
+                            </small>
+
+                            <strong>
+                                Male
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Blood Group
+                            </small>
+
+                            <strong>
+                                O+
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Phone
+                            </small>
+
+                            <strong>
+                                {{patientData().phone}}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+    <div class="row g-3">
+
+
+        <!-- =====================================================
+             LEFT : VISIT HISTORY
+             ===================================================== -->
+        <div class="col-lg-4 col-xl-3">
+
+            <div class="card cm-page-card h-100">
+
+                <!-- Header -->
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <h5 class="mb-1">
+
+                                <i class="bi bi-clock-history me-2" style="color:var(--cm-primary);"></i>
+
+                                Visit History
+
+                            </h5>
+
+                            <small class="text-muted">
+                                Patient visits
+                            </small>
+
+                        </div>
+
+
+                        <span class="badge bg-light text-dark border">
+
+                            08 Visits
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Visit List -->
+                <div class="card-body p-2">
+
+
+                    <!-- =================================================
+                         CURRENT VISIT
+                         ================================================= -->
+                    @for (item of visitList(); track $index) {
+                    <button type="button" click="onSelectVisit(item)"  class="w-100 text-start border rounded-3 p-3 mb-2" style="
+                                background-color:var(--cm-primary-light);
+                                border-color:var(--cm-primary) !important;
+                            ">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <div class="fw-semibold" style="color:var(--cm-primary);">
+
+                                    {{item.visitDate}}
+
+                                </div>
+
+                                <div class="small mt-1">
+
+                                    {{item.diagnosis}}
+
+                                </div>
+                                <div class="small mt-1">
+
+                                    {{item.symptoms}}
+
+                                </div>
+
+                            </div>
+
+
+                            <span class="badge bg-primary-subtle text-primary">
+
+                                {{item.visitStatus}}
+
+                            </span>
+
+                        </div>
+                    </button>
+
+                    }
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT : SELECTED VISIT
+             ===================================================== -->
+        <div class="col-lg-8 col-xl-9">
+
+
+            <!-- =================================================
+                 SELECTED VISIT DETAILS
+                 ================================================= -->
+            <div class="card cm-page-card mb-3">
+
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <h5 class="mb-1">
+
+                                <i class="bi bi-clipboard2-pulse me-2" style="color:var(--cm-primary);"></i>
+
+                                Selected Visit
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Visit #V-2026-008
+
+                            </small>
+
+                        </div>
+
+
+                        <span class="badge bg-success-subtle text-success">
+
+                            <i class="bi bi-check-circle me-1"></i>
+                            Completed
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="row g-4">
+
+                        <!-- Visit Date -->
+                        <div class="col-md-3">
+
+                            <small class="text-muted d-block">
+                                Visit Date
+                            </small>
+
+                            <strong class="d-block mt-1">
+                                27 Aug 2026
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Doctor -->
+                        <div class="col-md-3">
+
+                            <small class="text-muted d-block">
+                                Doctor
+                            </small>
+
+                            <strong class="d-block mt-1">
+                                Dr. Arun Kumar
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Symptoms -->
+                        <div class="col-md-3">
+
+                            <small class="text-muted d-block">
+                                Symptoms
+                            </small>
+
+                            <strong class="d-block mt-1">
+                                Fever, headache
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Diagnosis -->
+                        <div class="col-md-3">
+
+                            <small class="text-muted d-block">
+                                Diagnosis
+                            </small>
+
+                            <strong class="d-block mt-1">
+                                Viral Fever
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr class="my-4">
+
+
+                    <!-- Doctor Notes -->
+                    <div>
+
+                        <small class="text-muted d-block mb-1">
+                            Doctor's Notes
+                        </small>
+
+                        <p class="mb-0 text-secondary">
+
+                            Patient presented with mild fever and headache.
+                            Advised adequate hydration and rest.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRESCRIPTION
+                 ================================================= -->
+            <div class="card cm-page-card mb-3">
+
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <h5 class="mb-1">
+
+                                <i class="bi bi-capsule me-2" style="color:var(--cm-primary);"></i>
+
+                                Prescription
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Medicines prescribed for this visit
+
+                            </small>
+
+                        </div>
+
+
+                        <span class="badge bg-light text-dark border">
+
+                            2 Medicines
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table cm-table mb-0 align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:60px;">
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Medicine
+                                    </th>
+
+                                    <th>
+                                        Dosage
+                                    </th>
+
+                                    <th>
+                                        Frequency
+                                    </th>
+
+                                    <th>
+                                        Duration
+                                    </th>
+
+                                    <th>
+                                        Instructions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <!-- Medicine 1 -->
+                                <tr>
+
+                                    <td>
+                                        1
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            Paracetamol
+                                        </strong>
+
+                                        <small class="d-block text-muted">
+                                            Tablet · 500 mg
+                                        </small>
+
+                                    </td>
+
+                                    <td>
+                                        1 tablet
+                                    </td>
+
+                                    <td>
+                                        Twice daily
+                                    </td>
+
+                                    <td>
+                                        5 Days
+                                    </td>
+
+                                    <td>
+                                        After food
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- Medicine 2 -->
+                                <tr>
+
+                                    <td>
+                                        2
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            Cetirizine
+                                        </strong>
+
+                                        <small class="d-block text-muted">
+                                            Tablet · 10 mg
+                                        </small>
+
+                                    </td>
+
+                                    <td>
+                                        1 tablet
+                                    </td>
+
+                                    <td>
+                                        Once daily
+                                    </td>
+
+                                    <td>
+                                        5 Days
+                                    </td>
+
+                                    <td>
+                                        At night
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ADD PRESCRIPTION
+                 ================================================= -->
+            <div class="card cm-page-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h5 class="mb-1">
+
+                            <i class="bi bi-plus-circle me-2" style="color:var(--cm-primary);"></i>
+
+                            Add Prescription
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Add medicine for Visit #V-2026-008
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+
+                        <!-- Medicine -->
+                        <div class="col-md-6">
+
+                            <label class="form-label small fw-semibold">
+
+                                Medicine Name
+
+                            </label>
+
+                            <select class="form-select">
+
+                                <option selected disabled>
+                                    Select medicine
+                                </option>
+
+                                <option>
+                                    Paracetamol
+                                </option>
+
+                                <option>
+                                    Cetirizine
+                                </option>
+
+                                <option>
+                                    ORS
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Dosage -->
+                        <div class="col-md-3">
+
+                            <label class="form-label small fw-semibold">
+
+                                Dosage
+
+                            </label>
+
+                            <input type="text" class="form-control" placeholder="e.g. 1 tablet">
+
+                        </div>
+
+
+                        <!-- Frequency -->
+                        <div class="col-md-3">
+
+                            <label class="form-label small fw-semibold">
+
+                                Frequency
+
+                            </label>
+
+                            <select class="form-select">
+
+                                <option selected disabled>
+                                    Select
+                                </option>
+
+                                <option>
+                                    Once daily
+                                </option>
+
+                                <option>
+                                    Twice daily
+                                </option>
+
+                                <option>
+                                    Thrice daily
+                                </option>
+
+                                <option>
+                                    As required
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Duration -->
+                        <div class="col-md-4">
+
+                            <label class="form-label small fw-semibold">
+
+                                Duration
+
+                            </label>
+
+                            <input type="text" class="form-control" placeholder="e.g. 5 Days">
+
+                        </div>
+
+
+                        <!-- Instructions -->
+                        <div class="col-md-8">
+
+                            <label class="form-label small fw-semibold">
+
+                                Instructions
+
+                            </label>
+
+                            <input type="text" class="form-control" placeholder="e.g. After food">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+
+                        <button type="button" class="btn btn-light border">
+
+                            Clear
+
+                        </button>
+
+
+                        <button type="button" class="btn btn-primary">
+
+                            <i class="bi bi-plus-lg me-1"></i>
+
+                            Add Medicine
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

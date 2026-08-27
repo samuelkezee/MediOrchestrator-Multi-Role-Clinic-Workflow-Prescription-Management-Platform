@@ -13,10 +13,14 @@ export class PatientService {
   http = inject(HttpClient);
 
   createNewpatient(obj:PatientModel):Observable<IPatientListModel>{
-    return this.http.post<IPatientListModel>(environment.API_URL+GlobalConstants.API_METHODS.PATIENT, obj)
+    return this.http.post<IPatientListModel>(environment.API_URL+GlobalConstants.API_METHODS.GET_PATIENT, obj)
   }
 
   getAllPatients():Observable<IPatientListModel[]>{
-    return this.http.get<IPatientListModel[]>(environment.API_URL+GlobalConstants.API_METHODS.PATIENT)
+    return this.http.get<IPatientListModel[]>(environment.API_URL+GlobalConstants.API_METHODS.GET_PATIENT)
+  }
+
+  getPatientByPId(pId:number):Observable<IPatientListModel>{
+    return this.http.get<IPatientListModel>(environment.API_URL+GlobalConstants.API_METHODS.GET_PATIENT_BY_ID+`${pId}`)
   }
 }

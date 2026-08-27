@@ -3,7 +3,7 @@ import { FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractContro
 import { Userservices } from '../../core/services/userservices';
 import { isActive } from '@angular/router';
 import { LoginModel } from '../../core/models/class/User.Model';
-import { LoginAPIResponseModel } from '../../core/models/interfaces/User.Model';
+import { UserResponseModel } from '../../core/models/interfaces/User.Model';
 import { NgClass } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { Login } from '../login/login';
@@ -17,7 +17,7 @@ import { Login } from '../login/login';
 export class Users implements OnInit {
   isFormOpen: boolean = false;
   userForm!: FormGroup;
-  userList: WritableSignal<LoginAPIResponseModel[]> = signal<LoginAPIResponseModel[]>([]);
+  userList: WritableSignal<UserResponseModel[]> = signal<UserResponseModel[]>([]);
 
   @ViewChild('searchTemp') searchdropDown!:ElementRef;
   loggedUser!:LoginModel;
@@ -25,11 +25,13 @@ export class Users implements OnInit {
 
   constructor(private fb: FormBuilder,
     private usrServ: Userservices) {
-      this.loggedUser=this.usrServ.loggedUserData;  
+      // this.loggedUser=this.usrServ.loggedUserData;  
 
   }
 
   ngOnInit(): void {
+      // this.loggedUser=this.usrServ.loggedUser();  
+
     this.initializeForm();
     this.getAllUsers();
 
@@ -62,7 +64,7 @@ export class Users implements OnInit {
 
   getAllUsers(): void {
     this.usrServ.getAllUsers().subscribe({
-      next: (res: LoginAPIResponseModel[]) => {
+      next: (res: UserResponseModel[]) => {
         console.log('[getAllUsers] Raw API Response:', res);
         // Handle both direct array and wrapped responses (res.data or res)
         const list = res;
@@ -86,7 +88,7 @@ export class Users implements OnInit {
   const selectedRole = this.searchdropDown.nativeElement.value;
 
   this.usrServ.filterUsers(selectedRole).subscribe({
-    next: (res: LoginAPIResponseModel[]) => {
+    next: (res: UserResponseModel[]) => {
       console.log('[filterUsers] Raw API Response:', res);
       // Handle both direct array and wrapped responses (res.data or res)
       const list = res;

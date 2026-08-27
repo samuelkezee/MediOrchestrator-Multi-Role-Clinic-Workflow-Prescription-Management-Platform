@@ -5,5 +5,5 @@ export interface IPatientListModel {
     phone:string,
     address:string, 
     patientId:number,
-    createdDate:Date
+    createdDate?:Date
 }

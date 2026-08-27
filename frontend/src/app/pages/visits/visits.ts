@@ -4,15 +4,17 @@ import { PatientService } from '../../core/services/patient-service';
 import { IPatientListModel } from '../../core/models/interfaces/IPatientList.Model';
 import { Subscription } from 'rxjs';
 import { Userservices } from '../../core/services/userservices';
-import { LoginAPIResponseModel } from '../../core/models/interfaces/User.Model';
+import { UserResponseModel } from '../../core/models/interfaces/User.Model';
 import { GlobalConstants } from '../../core/constants/GlobalConstants';
 import { Observable } from 'rxjs';
 import { VisitService } from '../../core/services/visit-service';
 import { IVisitListModel } from '../../core/models/interfaces/IVisit.Model';
+import { HideShowBtn } from '../../shared/directives/hide-show-btn';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-visits',
-  imports: [NgClass, AsyncPipe],
+  imports: [NgClass, AsyncPipe, HideShowBtn, RouterLink],
   templateUrl: './visits.html',
   styleUrl: './visits.css',
 })
@@ -31,7 +33,7 @@ export class Visits implements OnInit,OnDestroy{
 
   subscriptionList:Subscription[] =[];
   patientList$:Observable<IPatientListModel[]>=new Observable<IPatientListModel[]>();
-  DoctorList$:Observable<LoginAPIResponseModel[]>=new Observable<LoginAPIResponseModel[]>();
+  DoctorList$:Observable<UserResponseModel[]>=new Observable<UserResponseModel[]>();
   visitList$:Observable<IVisitListModel[]>=new Observable<IVisitListModel[]>();
   
 

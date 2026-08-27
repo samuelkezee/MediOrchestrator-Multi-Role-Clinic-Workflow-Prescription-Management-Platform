@@ -23,25 +23,36 @@ export class Login {
 
 
 
-  Login() {
-    this.userSrv.onLogin(this.loginObj).subscribe({
-      next: (res: any) => {
-        this.loginResponse = res;
-        sessionStorage.setItem(GlobalConstants.LOGGED_USER_SESSION_NAME, JSON.stringify(res));
+  // Login() {
+  //   this.userSrv.onLogin(this.loginObj).subscribe({
+  //     next: (res: any) => {
+  //       this.loginResponse = res;
+  //       sessionStorage.setItem(GlobalConstants.LOGGED_USER_SESSION_NAME, JSON.stringify(res));
 
-        // Save token if returned by API
-        const token = res.token || res.data?.token || res.jwtToken || res.accessToken;
-        if (token) {
-          sessionStorage.setItem(GlobalConstants.TOKEN_SESSION_NAME, token);
-        }
-        this.userSrv.assignLoggedUser();
-        this.router.navigate(["/users"]);
-      },
-      error: (error: any) => {
-        alert("Api error: " + (error?.error?.message || error?.error || error?.message || "Login failed"));
-      }
-    });
-  }
+  //       // Save token if returned by API
+  //       const token = res.token || res.data?.token || res.jwtToken || res.accessToken;
+  //       if (token) {
+  //         sessionStorage.setItem(GlobalConstants.TOKEN_SESSION_NAME, token);
+  //       }
+  //       this.userSrv.assignLoggedUser();
+  //       this.router.navigate(["/users"]);
+  //     },
+  //     error: (error: any) => {
+  //       alert("Api error: " + (error?.error?.message || error?.error || error?.message || "Login failed"));
+  //     }
+  //   });
+  // }
+  Login() {
+  this.userSrv.onLogin(this.loginObj).subscribe({
+    next: (res: LoginAPIResponseModel) => {
+      this.userSrv.setLoggedUser(res);
+      this.router.navigate(['/users']);
+    },
+    error: (error: any) => {
+      alert('Api error: ' + (error?.error?.message || error?.error || error?.message || 'Login failed'));
+    }
+  });
+}
 
 
 }

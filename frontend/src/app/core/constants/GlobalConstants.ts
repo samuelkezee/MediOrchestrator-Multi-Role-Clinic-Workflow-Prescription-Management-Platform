@@ -7,13 +7,15 @@ export const GlobalConstants={
         DELETEUSER:"DeleteUser",
         GETUSERBYID:"GetUserById",
         FILTER_USER:"staff?roleName=",
-        PATIENT:"patients",
+        GET_PATIENT:"patients",
+        GET_PATIENT_BY_ID:"patients/",
         GETALLMEDICINE:"Medicines",
         CREATE_MEDICINE:"Medicines",
         UPDATE_MEDICINE:"Medicines",
         DELETE_MEDICINE:"Medicines/",
         GET_MEDICINE_BY_ID:"Medicines/",
         GET_VISIT:"visits",
+        VISIT_BY_PATIENT:"visits/patient/",
         CREATE_VISIT:"visits",
     },
     REG_EXP:{
@@ -41,7 +43,7 @@ export const GlobalConstants={
     ],
     ROLE:{
         DOCTOR:"Doctor",
-        PATIENT:"Patient",
+        ADMIN:"Admin",
         RECEPTIONIST:"Receptionist"
 
         

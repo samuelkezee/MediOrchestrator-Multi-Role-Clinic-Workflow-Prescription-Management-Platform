@@ -1,7 +1,9 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import {menuItem} from '../../core/constants/Menu.Constants';
+import {MenuConstant} from '../../core/constants/Menu.Constants';
+import { Userservices } from '../../core/services/userservices';
+import { UserResponseModel } from '../../core/models/interfaces/User.Model';
 
 @Component({
   selector: 'app-layout',
@@ -11,27 +13,26 @@ import {menuItem} from '../../core/constants/Menu.Constants';
 })
 export class Layout {
 
+  usrSrv=inject(Userservices);
+
   isSidebarExpanded: boolean = true;
-  loggedUserData: any;
-  menuItemList=menuItem;
+  loggedUserData: UserResponseModel | null = null;
+  menuItemList = MenuConstant.menuItem;
   //constant data cannot be used directly into HTML ,so create a variable
 
 
   constructor(private router:Router) {
-    const loggedData = sessionStorage.getItem("hospitalUser");
-    if (loggedData && loggedData !== 'undefined' && loggedData !== 'null') {
-      try {
-        this.loggedUserData = JSON.parse(loggedData);
-      } catch (e) {
-        console.error("Error parsing loggedUserData from sessionStorage:", e);
-      }
-    }
+    this.loggedUserData = this.usrSrv.getLoggedUser();
+    const roleName = this.loggedUserData?.roleName?.trim().toLowerCase();
+    this.menuItemList = roleName
+      ? MenuConstant.menuItem.filter(menuItem =>
+          menuItem.roles.some(role => role.toLowerCase() === roleName))
+      : [];
+
   }
 
   onLogoff(){
-    sessionStorage.removeItem("hospitalUser");
-    sessionStorage.removeItem("token");
-    localStorage.removeItem("token");
+    this.usrSrv.logout();
     this.router.navigateByUrl("/login");
   }
 

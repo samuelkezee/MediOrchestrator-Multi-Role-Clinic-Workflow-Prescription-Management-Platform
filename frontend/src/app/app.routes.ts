@@ -8,6 +8,10 @@ import { RegisterPatient } from './pages/patient/register-patient/register-patie
 import { PatientList } from './pages/patient/patient-list/patient-list';
 import { Visits } from './pages/visits/visits';
 
+
+// import { NoRoleAccess } from './pages/no-role-access/no-role-access';
+import { OpenPatient } from './pages/open-patient/open-patient';
+
 export const routes: Routes = [
     {
         path: '',
@@ -29,19 +33,32 @@ export const routes: Routes = [
         children: [
             {
                 path: 'users',
-                component: Users
+                component: Users,
+                // canActivate:[roleBasedAccessGuard],
             },
             {
                 path: 'medicine-master',
-                component: MedicinesMaster
+                component: MedicinesMaster,
+                // canActivate:[roleBasedAccessGuard],
             },{
                 path: 'patient-list',
-                component:PatientList
+                component:PatientList,
+                // canActivate:[roleBasedAccessGuard],
             },
             {
                 path: 'visits',
-                component:Visits
-            }
+                component:Visits,
+                // canActivate:[roleBasedAccessGuard],
+            },
+            {
+                path:'open-patient/:patientId',
+                component:OpenPatient,
+                // canActivate:[roleBasedAccessGuard]
+            },
+            // {
+            //     path: 'no-role-access',
+            //     component:NoRoleAccess
+            // }
         ]
     }
 ];

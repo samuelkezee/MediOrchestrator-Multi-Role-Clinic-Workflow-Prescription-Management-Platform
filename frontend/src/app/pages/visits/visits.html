@@ -38,9 +38,9 @@
                         </button>
 
                         <!-- Add Medicine -->
-                        <button type="button" class="btn btn-success">
+                        <button type="button" appHideShowBtn (click)="toggleFormVisibility()" class="btn btn-success">
                             <i class="bi bi-plus-lg me-1"></i>
-                            Add Medicine
+                            Add Visit
                         </button>
 
                     </div>
@@ -84,6 +84,10 @@
                                 <td>{{ item.visitStatus }}</td>
 
                                 <td class="d-flex gap-2 justify-content-center">
+                                    <button type="button" [routerLink]="'/open-patient/'+item.patientId" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil"></i>
+                                        open-form
+                                    </button>
 
                                     <button type="button" class="btn btn-sm btn-primary">
                                         <i class="bi bi-pencil"></i>

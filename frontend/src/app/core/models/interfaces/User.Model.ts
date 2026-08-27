@@ -1,4 +1,4 @@
-export interface LoginAPIResponseModel {
+export interface UserResponseModel {
     id: number;
     fullName: string;
     email: string;
@@ -8,5 +8,12 @@ export interface LoginAPIResponseModel {
     isActive: boolean;
     token?: string;
     projectName?: string;
+}
+
+
+export interface LoginAPIResponseModel {
+    token: string;
+    expiresOn: string;
+    user: UserResponseModel;
 }
 

@@ -34,7 +34,7 @@
         <!-- Navigation -->
         <nav class="sidebar-menu">
             @for(menuItem of menuItemList; track $index){
-                <a routerLink="{{menuItem.router}}" routerLinkActive="active" class="nav-item">
+                <a [routerLink]="menuItem.router" routerLinkActive="active" class="nav-item">
                     <i class="{{menuItem.icon}}"></i>
                     <span>{{menuItem.title}}</span>
                 </a>
@@ -54,7 +54,7 @@
 
                 <span class="username">{{loggedUserData?.fullName}}
                 </span>
-                <span class="role">{{loggedUserData?.roleName || loggedUserData?.role}}
+                <span class="role">{{loggedUserData?.roleName}}
                 </span>
 
                 <i class="bi bi-caret-down-fill dropdown-icon"></i>

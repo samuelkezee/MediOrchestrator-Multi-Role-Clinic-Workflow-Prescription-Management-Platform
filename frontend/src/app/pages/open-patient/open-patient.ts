@@ -4,7 +4,6 @@ import { PatientService } from '../../core/services/patient-service';
 import { IPatientListModel } from '../../core/models/interfaces/IPatientList.Model';
 import { VisitService } from '../../core/services/visit-service';
 import { IVisitListModel } from '../../core/models/interfaces/IVisit.Model';
-import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-open-patient',
   imports: [],
@@ -27,20 +26,21 @@ export class OpenPatient {
     phone: "",
     address: "",
     patientId: 0,
+
   })
   visitList: WritableSignal<IVisitListModel[]> = signal<IVisitListModel[]>([])
-  selectedVisit?: IVisitListModel;
+  selectedVisit: WritableSignal<IVisitListModel | undefined> = signal<IVisitListModel | undefined>(undefined);
 
 
 
   constructor() {
     this.activatedRoute.params.subscribe({
       next: (param: any) => {
-        this.currentPatientId = param['patientId'];
+        this.currentPatientId = Number(param['patientId']);
+        this.getPatientById();
+        this.getVisitByPatientId();
       }
     })
-    this.getPatientById();
-    this.getVisitByPatientId();
   }
   getPatientById() {
     this.patientService.getPatientByPId(this.currentPatientId).subscribe({
@@ -54,11 +54,12 @@ export class OpenPatient {
     this.visitService.getPatientVisitById(this.currentPatientId).subscribe({
       next: (visit: IVisitListModel[]) => {
         this.visitList.set(visit);
+        this.selectedVisit.set(visit[0]);
 
       }
     })
+  selectVisit(visit: IVisitListModel) {
+    this.selectedVisit.set(visit);
   }
-  onSelectVisit(VisitData:IVisitListModel){
-    this.selectedVisit=VisitData;
   }
 };

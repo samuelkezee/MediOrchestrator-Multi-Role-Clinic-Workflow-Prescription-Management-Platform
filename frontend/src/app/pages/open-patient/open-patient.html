@@ -210,7 +210,7 @@
                          CURRENT VISIT
                          ================================================= -->
                     @for (item of visitList(); track $index) {
-                    <button type="button" click="onSelectVisit(item)"  class="w-100 text-start border rounded-3 p-3 mb-2" style="
+                    <button type="button" class="w-100 text-start border rounded-3 p-3 mb-2" (click)="selectVisit(item)" style="
                                 background-color:var(--cm-primary-light);
                                 border-color:var(--cm-primary) !important;
                             ">
@@ -225,11 +225,6 @@
 
                                 </div>
 
-                                <div class="small mt-1">
-
-                                    {{item.diagnosis}}
-
-                                </div>
                                 <div class="small mt-1">
 
                                     {{item.symptoms}}
@@ -267,6 +262,7 @@
             <!-- =================================================
                  SELECTED VISIT DETAILS
                  ================================================= -->
+            @if (selectedVisit(); as visit) {
             <div class="card cm-page-card mb-3">
 
                 <div class="card-header">
@@ -285,7 +281,7 @@
 
                             <small class="text-muted">
 
-                                Visit #V-2026-008
+                                Visit #{{visit.visitId}}
 
                             </small>
 
@@ -316,7 +312,7 @@
                             </small>
 
                             <strong class="d-block mt-1">
-                                27 Aug 2026
+                                {{visit.visitDate}}
                             </strong>
 
                         </div>
@@ -330,7 +326,7 @@
                             </small>
 
                             <strong class="d-block mt-1">
-                                Dr. Arun Kumar
+                                {{visit.doctorName}}
                             </strong>
 
                         </div>
@@ -344,7 +340,7 @@
                             </small>
 
                             <strong class="d-block mt-1">
-                                Fever, headache
+                                {{visit.symptoms}}
                             </strong>
 
                         </div>
@@ -358,7 +354,7 @@
                             </small>
 
                             <strong class="d-block mt-1">
-                                Viral Fever
+                                {{visit.diagnosis}}
                             </strong>
 
                         </div>
@@ -378,8 +374,7 @@
 
                         <p class="mb-0 text-secondary">
 
-                            Patient presented with mild fever and headache.
-                            Advised adequate hydration and rest.
+                            {{visit.diagnosis}}
 
                         </p>
 
@@ -388,6 +383,7 @@
                 </div>
 
             </div>
+            }
 
 
             <!-- =================================================

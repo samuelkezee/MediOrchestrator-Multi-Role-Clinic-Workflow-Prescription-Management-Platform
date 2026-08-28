@@ -98,7 +98,7 @@ import { environment } from '../../../environments/environment';
 import { LoginModel, userModel } from '../models/class/User.Model';
 import { GlobalConstants } from '../constants/GlobalConstants';
 import { LoginAPIResponseModel, UserResponseModel } from '../models/interfaces/User.Model';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class Userservices {
@@ -107,6 +107,9 @@ export class Userservices {
   // single reactive source of truth
   private _loggedUser = signal<UserResponseModel | null>(this.readFromStorage());
   readonly loggedUser = this._loggedUser.asReadonly(); // any component/service can read this reactively
+
+
+  loginTimeoutInterval=timer(5*60*1000);
 
   constructor() {}
 

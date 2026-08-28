@@ -8,19 +8,16 @@
 
             <div class="brand">
                 <div class="brand-icon">
-                    B
+                    H
                 </div>
 
                 <span class="brand-text">
-                    Sidebar
+                    Clinic
                 </span>
             </div>
 
             <!-- Toggle button -->
-            <button
-                type="button"
-                class="btn toggle-btn"
-                (click)="togglesidebar()">
+            <button type="button" class="btn toggle-btn" (click)="togglesidebar()">
 
                 <i class="bi bi-list"></i>
 
@@ -34,10 +31,10 @@
         <!-- Navigation -->
         <nav class="sidebar-menu">
             @for(menuItem of menuItemList; track $index){
-                <a [routerLink]="menuItem.router" routerLinkActive="active" class="nav-item">
-                    <i class="{{menuItem.icon}}"></i>
-                    <span>{{menuItem.title}}</span>
-                </a>
+            <a [routerLink]="menuItem.router" routerLinkActive="active" class="nav-item">
+                <i class="{{menuItem.icon}}"></i>
+                <span>{{menuItem.title}}</span>
+            </a>
             }
         </nav>
 
@@ -63,14 +60,11 @@
 
 
             <!-- Logout button -->
-            <button
-                type="button"
-                class="btn logout-btn"
-                (click)="onLogoff()">
+            <button type="button" class="btn logout-btn" (click)="onLogoff()">
 
                 <i class="bi bi-box-arrow-right"></i>
 
-                <span class="logout-text" >
+                <span class="logout-text">
                     Logout
                 </span>
 

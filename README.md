@@ -8,6 +8,10 @@ The application communicates with a secure backend API hosted at:
 Take the endpoints of:
 `https://testprojectapi.gerasim.in/api/HospitalPrescriptions/`
 
+The application requires authentication to access the dashboard and role-based features.
+
+email: ajay@gmail.com , pw:1212
+
 ---
 
 ## 🚀 Key Modules & Role-Based Workflows

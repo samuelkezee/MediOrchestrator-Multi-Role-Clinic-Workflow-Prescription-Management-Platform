@@ -8,7 +8,7 @@ The application communicates with a secure backend API hosted at:
 Take the endpoints of:
 `https://testprojectapi.gerasim.in/api/HospitalPrescriptions/`
 
-The application requires authentication to access the dashboard and role-based features.
+Since it is a mock application :The application requires authentication to access the dashboard and role-based features, also provided the environment for test(only contains swagger API URL).
 
 email: ajay@gmail.com , pw:1212
 

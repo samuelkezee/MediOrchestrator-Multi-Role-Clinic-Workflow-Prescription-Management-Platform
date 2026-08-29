@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Userservices } from '../../core/services/userservices';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LoginModel } from '../../core/models/class/User.Model';
-import { LoginAPIResponseModel } from '../../core/models/interfaces/User.Model';
-import { GlobalConstants } from '../../core/constants/GlobalConstants';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../../store/auth/auth.actions';
+import { AppState } from '../../store';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +14,7 @@ import { GlobalConstants } from '../../core/constants/GlobalConstants';
 export class Login {
 
   loginObj: LoginModel = new LoginModel();
-  loginResponse!: LoginAPIResponseModel;
-
-  userSrv = inject(Userservices);
-  router = inject(Router);
-
-
+  private store = inject(Store<AppState>);
 
 
   // Login() {
@@ -43,16 +37,11 @@ export class Login {
   //   });
   // }
   Login() {
-  this.userSrv.onLogin(this.loginObj).subscribe({
-    next: (res: LoginAPIResponseModel) => {
-      this.userSrv.setLoggedUser(res);
-      this.router.navigate(['/users']);
-    },
-    error: (error: any) => {
-      alert('Api error: ' + (error?.error?.message || error?.error || error?.message || 'Login failed'));
-    }
-  });
-}
+    this.store.dispatch(AuthActions.login({ credentials: this.loginObj }));
+  }
 
+  logout(){
+    this.store.dispatch(AuthActions.logout());
+  }
 
 }

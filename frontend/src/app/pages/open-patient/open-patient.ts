@@ -58,8 +58,9 @@ export class OpenPatient {
 
       }
     })
+  }
+
   selectVisit(visit: IVisitListModel) {
     this.selectedVisit.set(visit);
-  }
   }
 };

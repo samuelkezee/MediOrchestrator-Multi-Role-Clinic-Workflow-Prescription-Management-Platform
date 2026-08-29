@@ -3,7 +3,10 @@ import { form, minLength, required, FormField } from '@angular/forms/signals';
 import { NgClass } from '@angular/common';
 import { GlobalConstants } from '../../core/constants/GlobalConstants';
 import { MedicineModel } from '../../core/models/interfaces/Medicine.Model';
-import { MedicineService } from '../../core/services/medicine-service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store';
+import * as MedicineActions from '../../store/medicines/medicines.actions';
+import { selectMedicines } from '../../store/medicines/medicines.selectors';
 import { FormsModule } from "@angular/forms";
 
 @Component({
@@ -13,10 +16,10 @@ import { FormsModule } from "@angular/forms";
   styleUrl: './medicines-master.css',
 })
 export class MedicinesMaster implements OnInit {
-  private medicineService = inject(MedicineService);
+  private store = inject(Store<AppState>);
 
   isFormOpen = signal<boolean>(false);
-  medicineList: WritableSignal<MedicineModel[]> = signal<MedicineModel[]>([]);
+  medicineList = this.store.selectSignal(selectMedicines);
   selectedMedicine = signal<string>('');
   searchMedicine = signal<string>('');
 
@@ -58,20 +61,10 @@ export class MedicinesMaster implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getAllMedicine();
+    this.store.dispatch(MedicineActions.loadMedicines());
   }
 
-  getAllMedicine(): void {
-    this.medicineService.getAllMedicine().subscribe({
-      next: (res: any) => {
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        this.medicineList.set(list);
-      },
-      error: (err) => {
-        console.error('Error fetching medicines:', err);
-      }
-    });
-  }
+  getAllMedicine(): void { this.store.dispatch(MedicineActions.loadMedicines()); }
 
   onReset(): void {
     this.newMedicine.set({
@@ -111,16 +104,7 @@ export class MedicinesMaster implements OnInit {
     if (!id) return;
     if (!confirm('Are you sure you want to delete this medicine?')) return;
 
-    this.medicineService.deleteMedicine(id).subscribe({
-      next: () => {
-        alert('Medicine deleted successfully');
-        this.getAllMedicine();
-      },
-      error: (err: any) => {
-        console.error('Error deleting medicine:', err);
-        alert('Failed to delete medicine');
-      }
-    });
+    this.store.dispatch(MedicineActions.deleteMedicine({ id }));
   }
 
   onsave(): void {
@@ -130,32 +114,8 @@ export class MedicinesMaster implements OnInit {
 
     const formValue = this.medicineForm().value() as MedicineModel;
 
-    if (formValue.medicineId && formValue.medicineId > 0) {
-      this.medicineService.updateMedicine(formValue).subscribe({
-        next: () => {
-          alert('Medicine updated successfully');
-          this.getAllMedicine();
-          this.onReset();
-          this.isFormOpen.set(false);
-        },
-        error: (err: any) => {
-          console.error('Error updating medicine:', err);
-          alert('Failed to update medicine');
-        }
-      });
-    } else {
-      this.medicineService.createMedicine(formValue).subscribe({
-        next: () => {
-          alert('Medicine added successfully');
-          this.getAllMedicine();
-          this.onReset();
-          this.isFormOpen.set(false);
-        },
-        error: (err) => {
-          console.error('Error adding medicine:', err);
-          alert('Failed to add medicine');
-        }
-      });
-    }
+    this.store.dispatch(MedicineActions.saveMedicine({ medicine: formValue }));
+    this.onReset();
+    this.isFormOpen.set(false);
   }
 }

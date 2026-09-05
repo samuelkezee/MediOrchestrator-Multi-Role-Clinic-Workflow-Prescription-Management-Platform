@@ -1,0 +1,14 @@
+
+@MediOrchestratorAPI_HostAddress = https://localhost:7230
+
+POST {{MediOrchestratorAPI_HostAddress}}/api/Patients/patients
+Content-Type: application/json
+Accept: application/json
+{
+  "FullName"="Santosh",
+  "Gender"="Male",
+  "MobileNo"="9074003923"
+  "BloodGroup" ="A+ve"
+  "DateOfBirth"="25/12/1998"
+  "Address"="xyz"
+}

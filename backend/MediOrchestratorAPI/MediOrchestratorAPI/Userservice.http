@@ -1,0 +1,38 @@
+@MediOrchestratorAPI_HostAddress = https://localhost:7230
+
+
+###
+POST {{MediOrchestratorAPI_HostAddress}}/api/User/staff
+Content-Type: application/json
+Accept: application/json
+{
+  "fullName": "Anu",
+  "email": "Anan@gmail.com",
+  "password": "ABcd@123",
+  "mobileNo": "9074003923",
+  "roleName": "Admin"
+}
+###
+PUT {{MediOrchestratorAPI_HostAddress}}/api/User/staff/6
+Content-Type: application/json
+Accept: application/json
+{
+  "fullName": "Anumol",
+  "email": "Anumol@gmail.com",
+  "password": "ABcd@123",
+  "mobileNo": "9074003923",
+  "roleName": "Admin"
+}
+###
+
+GET {{MediOrchestratorAPI_HostAddress}}/api/User/staff/
+Accept: application/json
+
+###
+DELETE {{MediOrchestratorAPI_HostAddress}}/api/User/staff/3
+Accept: application/json
+
+
+###
+POST {{MediOrchestratorAPI_HostAddress}}/api/User/staff/
+Accept: application/json

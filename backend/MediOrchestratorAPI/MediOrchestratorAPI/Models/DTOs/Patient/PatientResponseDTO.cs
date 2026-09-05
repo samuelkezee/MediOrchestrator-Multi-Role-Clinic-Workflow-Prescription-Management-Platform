@@ -1,0 +1,22 @@
+﻿namespace MediOrchestratorAPI.Models.DTOs.Patient
+{
+    public class PatientResponseDTO
+    {
+        
+        public string FullName { get; set; } = string.Empty;
+
+       
+        public String Gender { get; set; } = string.Empty;
+       
+        public string MobileNo { get; set; } = string.Empty;
+
+        public string BloodGroup { get; set; } = string.Empty;
+
+
+        public DateTime DateOfBirth { get; set; }
+
+        public string Address { get; set; } = string.Empty;
+
+
+    }
+}

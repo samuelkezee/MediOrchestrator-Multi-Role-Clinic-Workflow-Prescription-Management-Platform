@@ -1,20 +1,20 @@
 # 🏥 MediOrchestrator: Multi-Role Clinic Workflow & Prescription Management Platform
 
-MediOrchestrator is a modern, responsive **Angular-based** clinic management application designed to handle patient registration, staff coordination, medicine directories, and digital prescriptions. It features a role-based access system catering to **Doctors**, **Receptionists**, and **Patients**.
+MediOrchestrator is a clinic management platform designed to handle patient registration, staff coordination, medicine directories, clinic visits, and digital prescriptions. It features a role-based access system catering to **Doctors**, **Receptionists**, and **Patients**.
 
-The application communicates with a secure backend API hosted at:
-`https://testprojectapi.gerasim.in/swagger/index.html`
+The application communicates with the backend API hosted at:
+- **Swagger Documentation**: `https://testprojectapi.gerasim.in/swagger/index.html`
+- **Base Endpoint**: `https://testprojectapi.gerasim.in/api/HospitalPrescriptions/`
 
-Take the endpoints of:
-`https://testprojectapi.gerasim.in/api/HospitalPrescriptions/`
+The repository also includes a custom **ASP.NET Core (.NET 10)** backend service (`backend/MediOrchestratorAPI`) built with Entity Framework Core and PostgreSQL.
 
 ---
 
 ## 🚀 Key Modules & Role-Based Workflows
 
 ### 🔐 1. Authentication & Security
-- **Secure Log-in System**: Access is gated behind email/password verification.
-- **Route Guarding**: All core screens (`/users`, `/medicine-master`, `/patient-list`, `/visits`) are protected by an `authGuard` that redirects unauthorized traffic back to the login screen.
+- **Secure Log-in System**: Access is gated behind email/password verification with JWT tokens.
+- **Route Guarding**: All core screens (`/users`, `/medicine-master`, `/patient-list`, `/visits`) are protected by route guards that redirect unauthorized traffic back to the login screen.
 - **HTTP Interception**: An Angular HTTP Interceptor (`token.interceptor.ts`) automatically clones outgoing requests to append `Authorization: Bearer <JWT_Token>` headers, and catches `401 Unauthorized` responses to automatically clear stale sessions and log users out.
 
 ### 👥 2. Role-Based Features
@@ -40,30 +40,40 @@ Take the endpoints of:
 
 ## 📂 Project Structure
 
-Below is the directory mapping of the Angular frontend:
-
 ```text
 Clinic_Manager/
+├── backend/
+│   └── MediOrchestratorAPI/
+│       ├── MediOrchestratorAPI/
+│       │   ├── Controllers/            # API Controllers (Auth, User, Patient, etc.)
+│       │   ├── Data/                   # EF Core AppDbContext & Configurations
+│       │   ├── Mapper/                 # Entity <-> DTO Mappings
+│       │   ├── Middleware/             # Custom exception & request handling middleware
+│       │   ├── Migrations/             # EF Core PostgreSQL database migrations
+│       │   ├── Models/
+│       │   │   ├── DTOs/               # Request & Response Data Transfer Objects
+│       │   │   └── Entities/           # Database Domain Entities (User, Patient, Visit, etc.)
+│       │   ├── Services/               # Business logic implementations
+│       │   ├── Program.cs              # DI container, pipeline, and JWT/Swagger setup
+│       │   └── appsettings.json        # Database connection strings & JWT settings
+│       └── MediOrchestratorAPI.slnx    # .NET Solution file
+│
 ├── frontend/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── core/                  # Core singletons and configurations
 │   │   │   │   ├── constants/         # API paths, patterns, role names (GlobalConstants.ts)
 │   │   │   │   ├── enum/              # Common enums
-│   │   │   │   ├── guards/            # Auth status check (auth.guard.ts)
-│   │   │   │   ├── interceptors/      # Bearer token injecting interceptor (token.interceptor.ts)
+│   │   │   │   ├── guards/            # Auth & Role status checks
+│   │   │   │   ├── interceptors/      # Bearer token injecting interceptor
 │   │   │   │   ├── models/            # Data structures & Interface/Class schemas
 │   │   │   │   └── services/          # HTTP request handlers (Userservices, MedicineService, PatientService)
-│   │   │   ├── pages/                 # UI components
-│   │   │   │   ├── layout/            # Main layout containing navbar, sidebar, and router-outlet
-│   │   │   │   ├── login/             # Portal entry/authentication form
-│   │   │   │   ├── medicines-master/  # Medicine search, insert, and update UI
-│   │   │   │   ├── patient/           # Registration form and master directory listing
-│   │   │   │   ├── users/             # Staff management screen (create, read, search, toggle status)
-│   │   │   │   └── visits/            # Visit records & prescription builder
+│   │   │   ├── pages/                 # UI components (login, medicines-master, patient, users, visits)
+│   │   │   ├── store/                 # NgRx / Signal Store state management (auth, medicines, patients)
 │   │   │   ├── app.routes.ts          # Angular Route Definitions
-│   │   │   └── app.config.ts          # Core config (routing, HttpClient, interceptors)
+│   │   │   └── app.config.ts          # Core config (routing, HttpClient, interceptors, Store)
 │   │   └── environments/              # API Base URLs (environment.ts)
+│   └── package.json
 ```
 
 ---
@@ -71,13 +81,17 @@ Clinic_Manager/
 ## ⚙️ Installation & Development Setup
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18.x or above) installed on your system.
+- [Node.js](https://nodejs.org/) (v18.x or above)
+- [.NET SDK 10.0](https://dotnet.microsoft.com/)
+- [PostgreSQL](https://www.postgresql.org/) (optional for local backend database)
 
-### Steps
+---
 
-1. **Clone and navigate to the project directory:**
+### 1. Frontend Setup
+
+1. **Navigate to the frontend directory:**
    ```bash
-   cd Clinic_Manager/frontend
+   cd frontend
    ```
 
 2. **Install dependencies:**
@@ -101,6 +115,34 @@ Make sure you have [Node.js](https://nodejs.org/) (v18.x or above) installed on 
    ```bash
    npm run test
    ```
+
+---
+
+### 2. Backend Setup (Local .NET API)
+
+1. **Navigate to the backend project directory:**
+   ```bash
+   cd backend/MediOrchestratorAPI/MediOrchestratorAPI
+   ```
+
+2. **Configure Database Connection:**
+   Set your PostgreSQL connection string in `appsettings.json`:
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Host=localhost;Database=mediorchestratordb;Username=postgres;Password=your_password"
+   }
+   ```
+
+3. **Apply Database Migrations:**
+   ```bash
+   dotnet ef database update
+   ```
+
+4. **Run the API server:**
+   ```bash
+   dotnet run
+   ```
+   *The Swagger UI documentation will be available at `http://localhost:<port>/swagger`.*
 
 ---
 
@@ -170,8 +212,16 @@ All endpoints are prefixed with the base URL: `https://testprojectapi.gerasim.in
 
 ## 🛠️ Technology Stack Detail
 
+### Frontend
 - **Framework**: [Angular CLI](https://angular.dev) v21.2.20 (Single Page Application architecture)
-- **State & Communication**: RxJS Observables, Signals (`signal`, `WritableSignal`), Custom HTTP Interceptors
+- **State & Communication**: NgRx (`@ngrx/store`, `@ngrx/effects`), RxJS Observables, Angular Signals (`signal`, `WritableSignal`), Custom HTTP Interceptors
 - **Styling & Layout**: Bootstrap v5.3.8, Bootstrap Icons v1.13.1, Custom layout styling
-- **Form Controls**: Angular `ReactiveFormsModule` (for complex validation on users screen) and `FormsModule` (for template-driven components)
+- **Form Controls**: Angular `ReactiveFormsModule` and `FormsModule`
 - **Unit Testing**: Vitest v4.0.8, JSDOM v28.0.0
+
+### Backend
+- **Framework**: ASP.NET Core Web API (.NET 10)
+- **Database & ORM**: PostgreSQL with Entity Framework Core (`Npgsql.EntityFrameworkCore.PostgreSQL`)
+- **Authentication**: ASP.NET Core JWT Bearer Authentication (`Microsoft.AspNetCore.Authentication.JwtBearer`)
+- **API Documentation**: OpenAPI & Swagger UI (`Swashbuckle.AspNetCore.SwaggerUI`, `Microsoft.AspNetCore.OpenApi`)
+- **Database Tooling**: Entity Framework Core Tools (`Microsoft.EntityFrameworkCore.Tools`)

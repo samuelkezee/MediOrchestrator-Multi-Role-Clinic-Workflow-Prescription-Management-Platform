@@ -1,10 +1,7 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RegisterPatient } from '../register-patient/register-patient';
 import { IPatientListModel } from '../../../core/models/interfaces/IPatientList.Model';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store';
-import * as PatientActions from '../../../store/patients/patients.actions';
-import { selectPatients } from '../../../store/patients/patients.selectors';
+import { PatientService } from '../../../core/services/patient-service';
 
 @Component({
   selector: 'app-patient-list',
@@ -15,8 +12,8 @@ import { selectPatients } from '../../../store/patients/patients.selectors';
 export class PatientList implements OnInit{
   isFormOpen=signal<boolean>(true);
 
-  private store = inject(Store<AppState>);
-  patientList = this.store.selectSignal(selectPatients);
+  patientList:WritableSignal<IPatientListModel[]>=signal([]);
+  patientSrv = inject(PatientService);
 
   toggleFormVisibility(){
     this.isFormOpen.update((prev)=>!prev);
@@ -24,8 +21,18 @@ export class PatientList implements OnInit{
   }
 
   ngOnInit(): void {
-    this.store.dispatch(PatientActions.loadPatients());
+    this.loadPatientList();
     
   }
 
+  loadPatientList(){
+    this.patientSrv.getAllPatients().subscribe({
+      next:(res:IPatientListModel[])=>{
+        this.patientList.set(res);
+      },
+      error:(err:any)=>{
+        console.log(err);
+      }
+    });
+  }  
 }

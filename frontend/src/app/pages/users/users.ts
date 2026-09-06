@@ -1,9 +1,6 @@
 import { Component, ElementRef, Inject, inject, OnInit, signal, viewChild, WritableSignal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ɵInternalFormsSharedModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../store';
-import * as UserActions from '../../store/users/users.actions';
-import { selectUsers } from '../../store/users/users.selectors';
+import { Userservices } from '../../core/services/userservices';
 import { isActive } from '@angular/router';
 import { LoginModel } from '../../core/models/class/User.Model';
 import { UserResponseModel } from '../../core/models/interfaces/User.Model';
@@ -20,15 +17,14 @@ import { Login } from '../login/login';
 export class Users implements OnInit {
   isFormOpen: boolean = false;
   userForm!: FormGroup;
-  private store = inject(Store<AppState>);
-  userList = this.store.selectSignal(selectUsers);
+  userList: WritableSignal<UserResponseModel[]> = signal<UserResponseModel[]>([]);
 
   @ViewChild('searchTemp') searchdropDown!:ElementRef;
   loggedUser!:LoginModel;
 
 
   constructor(private fb: FormBuilder,
-    ) {
+    private usrServ: Userservices) {
       // this.loggedUser=this.usrServ.loggedUserData;  
 
   }
@@ -37,7 +33,7 @@ export class Users implements OnInit {
       // this.loggedUser=this.usrServ.loggedUser();  
 
     this.initializeForm();
-    this.store.dispatch(UserActions.loadUsers());
+    this.getAllUsers();
 
   }
   initializeForm(): void {
@@ -66,7 +62,20 @@ export class Users implements OnInit {
 
   }
 
-  getAllUsers(): void { this.store.dispatch(UserActions.loadUsers()); }
+  getAllUsers(): void {
+    this.usrServ.getAllUsers().subscribe({
+      next: (res: UserResponseModel[]) => {
+        console.log('[getAllUsers] Raw API Response:', res);
+        // Handle both direct array and wrapped responses (res.data or res)
+        const list = res;
+        console.log('[getAllUsers] Parsed user list length:', list.length, list);
+        this.userList.set(list);
+      },
+      error: (error: any) => {
+        console.error('[getAllUsers] API Error:', error);
+      }
+    });
+  }
 
   onResetfilter(){
     this.searchdropDown.nativeElement='';
@@ -78,7 +87,18 @@ export class Users implements OnInit {
   onSearch() {
   const selectedRole = this.searchdropDown.nativeElement.value;
 
-    this.store.dispatch(UserActions.filterUsers({ role: selectedRole }));
+  this.usrServ.filterUsers(selectedRole).subscribe({
+    next: (res: UserResponseModel[]) => {
+      console.log('[filterUsers] Raw API Response:', res);
+      // Handle both direct array and wrapped responses (res.data or res)
+      const list = res;
+      console.log('[filterUsers] Parsed user list length:', list.length, list);
+      this.userList.set(list);
+    },
+    error: (error: any) => {
+      console.error('[filterUsers] API Error:', error);
+    }
+  });
 }
  
   onSave(): void {
@@ -91,9 +111,25 @@ export class Users implements OnInit {
     // Get form data
     const formValue = this.userForm.value;
     // Call backend
-    this.store.dispatch(UserActions.createUser({ user: formValue }));
-    this.onReset();
-    this.isFormOpen = false;
+    this.usrServ.onCreateUser(formValue).subscribe({
+      next: (response: any) => {
+        alert('User Created Successfully');
+        // Refresh user list
+        this.getAllUsers();
+        // Reset form
+        this.onReset();
+
+        // Close form
+        this.isFormOpen = false;
+
+      },
+
+      error: (error: any) => {
+        console.log(error);
+
+      }
+
+    });
 
   }
 }

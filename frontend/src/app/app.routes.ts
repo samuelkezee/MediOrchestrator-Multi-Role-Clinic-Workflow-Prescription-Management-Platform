@@ -7,58 +7,56 @@ import { authGuard } from './core/guards/auth.guard';
 import { RegisterPatient } from './pages/patient/register-patient/register-patient';
 import { PatientList } from './pages/patient/patient-list/patient-list';
 import { Visits } from './pages/visits/visits';
-
-
-// import { NoRoleAccess } from './pages/no-role-access/no-role-access';
 import { OpenPatient } from './pages/open-patient/open-patient';
+import { APP_ROUTES } from './core/constants/app-routes';
+import { roleBasedAccessGuard } from './core/guards/role-based-access-guard';
 
 export const routes: Routes = [
     {
-        path: '',
-        redirectTo: 'login',
+        path: APP_ROUTES.root,
+        redirectTo: APP_ROUTES.login,
         pathMatch: 'full'
     },
     {
-        path: 'login',
+        path: APP_ROUTES.login,
         component: Login
     },
     {
-        path:'register-patient', 
-        component:RegisterPatient
+        path: APP_ROUTES.registerPatient,
+        component: RegisterPatient
     },
     {
-        path: '',
+        path: APP_ROUTES.root,
         component: Layout,
         canActivate: [authGuard],
+       
         children: [
             {
-                path: 'users',
+                path: APP_ROUTES.users,
                 component: Users,
-                // canActivate:[roleBasedAccessGuard],
+                canActivate: [roleBasedAccessGuard]
             },
             {
-                path: 'medicine-master',
+                path: APP_ROUTES.medicineMaster,
                 component: MedicinesMaster,
-                // canActivate:[roleBasedAccessGuard],
-            },{
-                path: 'patient-list',
-                component:PatientList,
-                // canActivate:[roleBasedAccessGuard],
+                canActivate: [roleBasedAccessGuard]
             },
             {
-                path: 'visits',
-                component:Visits,
-                // canActivate:[roleBasedAccessGuard],
+                path: APP_ROUTES.patientList,
+                component: PatientList,
+                canActivate: [roleBasedAccessGuard]
             },
             {
-                path:'open-patient/:patientId',
-                component:OpenPatient,
-                // canActivate:[roleBasedAccessGuard]
+                path: APP_ROUTES.visits,
+                component: Visits,
+                canActivate: [roleBasedAccessGuard]
             },
-            // {
-            //     path: 'no-role-access',
-            //     component:NoRoleAccess
-            // }
+            {
+                path: APP_ROUTES.openPatient,
+                component: OpenPatient,
+                canActivate: [roleBasedAccessGuard]
+            }
+            
         ]
     }
 ];

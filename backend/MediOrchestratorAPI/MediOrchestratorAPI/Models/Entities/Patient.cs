@@ -3,7 +3,7 @@
 namespace MediOrchestratorAPI.Models.Entities
 {
     [Table("Patient")]
-    public class Patients
+    public class Patient
     {
         public int Id {  get; set; }
 
@@ -15,10 +15,13 @@ namespace MediOrchestratorAPI.Models.Entities
 
         public string BloodGroup { get; set; } = string.Empty;
 
-        public DateTime DateOfBirth= DateTime.MinValue;
+        public DateTime DateOfBirth { get; set; }
 
         public string Address { get; set; } = string.Empty;
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Visit> Visits { get; set; } = new List<Visit>();
 
     }
 }

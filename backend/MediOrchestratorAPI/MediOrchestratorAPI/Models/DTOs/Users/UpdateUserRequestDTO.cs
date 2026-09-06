@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MediOrchestratorAPI.Models.DTOs.Doctor;
+using System.ComponentModel.DataAnnotations;
 
 namespace MediOrchestratorAPI.Models.DTOs.Users
 {
@@ -18,5 +19,13 @@ namespace MediOrchestratorAPI.Models.DTOs.Users
 
         [Required]
         public string RoleName { get; set; } = string.Empty;
+
+        public DoctorProfileRequestDTO? DoctorProfile { get; set; }
     }
 }
+
+
+
+ 
+
+9i \]+

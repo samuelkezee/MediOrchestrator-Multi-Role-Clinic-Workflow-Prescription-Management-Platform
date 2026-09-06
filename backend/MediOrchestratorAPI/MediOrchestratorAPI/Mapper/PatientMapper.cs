@@ -6,7 +6,7 @@ namespace MediOrchestratorAPI.Mapper
     public static class PatientMapper
     {
         // Patient Entity → PatientResponseDTO
-        public static PatientResponseDTO ToDTO(Patients patient)
+        public static PatientResponseDTO ToDTO(Patient patient)
         {
             return new PatientResponseDTO
             {
@@ -20,9 +20,9 @@ namespace MediOrchestratorAPI.Mapper
         }
 
         // PatientDTO → Patient Entity
-        public static Patients ToEntity(PatientDTO patient)
+        public static Patient ToEntity(PatientDTO patient)
         {
-            return new Patients
+            return new Patient
             {
                 FullName = patient.FullName,
                 Gender = patient.Gender,
@@ -32,7 +32,7 @@ namespace MediOrchestratorAPI.Mapper
                 Address = patient.Address
             };
         }
-        public static Patients ApplyUpdate(Patients patient,PatientDTO dto)
+        public static Patient ApplyUpdate(Patient patient,PatientDTO dto)
         {
             patient.FullName = dto.FullName;
             patient.Gender = dto.Gender;

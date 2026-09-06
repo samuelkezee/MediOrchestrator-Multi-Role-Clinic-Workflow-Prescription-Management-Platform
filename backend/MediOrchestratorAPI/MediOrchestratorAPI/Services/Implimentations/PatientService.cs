@@ -23,7 +23,7 @@ namespace MediOrchestratorAPI.Services.Implimentations
         public async Task<PatientResponseDTO> CreatePatientAsync(PatientDTO patientDTO)
         {
             var patient = PatientMapper.ToEntity(patientDTO);
-            _context.Patients.Add(patient);
+            _context.Patient.Add(patient);
             await _context.SaveChangesAsync();
             return PatientMapper.ToDTO(patient);
         }
@@ -31,7 +31,7 @@ namespace MediOrchestratorAPI.Services.Implimentations
         //get all patients
         public async Task<List<PatientResponseDTO>> GetAllPatientsAsync()
         {
-            var patients = await _context.Patients.ToListAsync();
+            var patients = await _context.Patient.ToListAsync();
             return patients.Select(p => PatientMapper.ToDTO(p)).ToList();
         }
 
@@ -40,7 +40,7 @@ namespace MediOrchestratorAPI.Services.Implimentations
         //get patient by id
         public async Task<PatientResponseDTO?> GetPatientByIdAsync(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
+            var patient = await _context.Patient.FindAsync(id);
 
             if (patient == null)
             {
@@ -55,7 +55,7 @@ namespace MediOrchestratorAPI.Services.Implimentations
 
         public async Task<PatientResponseDTO?> UpdatePatientByIdAsync(int id,PatientDTO patientDTO)
         {
-            var existingPatient = await _context.Patients.FindAsync(id);
+            var existingPatient = await _context.Patient.FindAsync(id);
 
             if (existingPatient == null)
             {
@@ -77,12 +77,12 @@ namespace MediOrchestratorAPI.Services.Implimentations
 
         public async Task<bool> DeletePatientByIdAsync(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
+            var patient = await _context.Patient.FindAsync(id);
             if (patient == null)
             {
                 return false;
             }
-            _context.Patients.Remove(patient);
+            _context.Patient.Remove(patient);
             await _context.SaveChangesAsync();
             return true;
         }

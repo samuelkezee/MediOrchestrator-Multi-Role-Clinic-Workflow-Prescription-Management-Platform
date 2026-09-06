@@ -17,5 +17,13 @@
         public bool IsActive { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        // Doctor-specific fields
+        public string? Specialization { get; set; }
+
+        public string? LicenseNumber { get; set; }
+
+        public decimal? ConsultationFee { get; set; }
     }
 }
+

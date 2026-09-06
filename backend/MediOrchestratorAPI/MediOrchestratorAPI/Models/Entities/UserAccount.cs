@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 namespace MediOrchestratorAPI.Models.Entities
 {
@@ -21,5 +22,9 @@ namespace MediOrchestratorAPI.Models.Entities
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public DateTime UpdatedAt { get; internal set; }
+
+        public Doctor? DoctorProfile { get; set; }
+
+        public ICollection<Visit> VisitsCreated { get; set; } = new List<Visit>();
     }
 }

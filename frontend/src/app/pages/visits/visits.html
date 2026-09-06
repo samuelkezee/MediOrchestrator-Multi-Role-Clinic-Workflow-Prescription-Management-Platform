@@ -71,7 +71,7 @@
 
                         <tbody>
 
-                            @for (item of visitList$(); track $index) {
+                            @for (item of visitList$ | async; track $index) {
 
                             <tr>
                                 <td>{{ $index + 1 }}</td>
@@ -153,7 +153,7 @@
                                 </label>
 
                                 <select class="form-select" id="medicineFormType">
-                                    @for (item of patientList$(); track $index) {
+                                    @for (item of patientList$|async; track $index) {
                                     <option value="{{item.patientId}}">{{item.fullName}}-{{item.patientId}}</option>
                                     }
                                 </select>
@@ -169,7 +169,7 @@
                                 </label>
 
                                 <select class="form-select" id="doctorList">
-                                    @for(item of DoctorList$(); track $index){
+                                    @for(item of DoctorList$|async ; track $index){
                                     <option value="{{item.id}}">{{item.id}}-{{item.fullName}}</option>
                                     }
                                 </select>

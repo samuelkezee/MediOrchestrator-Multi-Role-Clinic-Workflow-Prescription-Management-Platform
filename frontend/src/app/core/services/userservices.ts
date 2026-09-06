@@ -108,9 +108,6 @@ export class Userservices {
   private _loggedUser = signal<UserResponseModel | null>(this.readFromStorage());
   readonly loggedUser = this._loggedUser.asReadonly(); // any component/service can read this reactively
 
-
-  loginTimeoutInterval=timer(5*60*1000);
-
   constructor() {}
 
   private readFromStorage(): UserResponseModel | null {

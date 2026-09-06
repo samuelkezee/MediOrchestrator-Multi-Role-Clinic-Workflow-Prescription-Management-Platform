@@ -2,9 +2,8 @@ import { Component, inject, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PatientModel } from '../../../core/models/class/Patient.Model';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store';
-import * as PatientActions from '../../../store/patients/patients.actions';
+import { PatientService } from '../../../core/services/patient-service';
+import { IPatientListModel } from '../../../core/models/interfaces/IPatientList.Model';
 
 @Component({
   selector: 'app-register-patient',
@@ -18,11 +17,20 @@ export class RegisterPatient {
   
 
   newPatientObj:PatientModel=new PatientModel();
-  private store = inject(Store<AppState>);
+  patientSrv=inject(PatientService)
 
   onRegister(){
-    this.store.dispatch(PatientActions.createPatient({ patient: this.newPatientObj }));
-    this.newPatientObj = new PatientModel();
+    debugger
+    this.patientSrv.createNewpatient(this.newPatientObj).subscribe({
+      next:(res:IPatientListModel)=>{
+        debugger
+        console.log(res);
+        this.newPatientObj=new PatientModel()
+      }, 
+      error:(err)=>{
+        console.log(err);
+      }
+    });
     
   }
 
